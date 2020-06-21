@@ -1,0 +1,23 @@
+{
+  "name": "game-server",
+  "version": "0.0.1",
+  "description": "Server for pixi game",
+  "main": "server.js",
+  "scripts": {
+    "test": "node server.js",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Toha22BSK/pixi-game-cg.git"
+  },
+  "author": "Toha22BSK",
+  "license": "ISC",
+  "dependencies": {
+    "express": ""
+  },
+  "bugs": {
+    "url": "https://github.com/Toha22BSK/pixi-game-cg/issues"
+  },
+  "homepage": "https://github.com/Toha22BSK/pixi-game-cg#readme"
+}

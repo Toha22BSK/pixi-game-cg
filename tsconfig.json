@@ -1,0 +1,21 @@
+{
+    "compilerOptions": {
+        "noImplicitAny": true,
+        "module": "AMD",
+        "target": "es5",
+        "sourceMap": true,
+        "experimentalDecorators": true,
+        "outDir": "res/js",
+        "listFiles": false
+    },
+    "compileOnSave": true,
+    "exclude": [],
+    "files": [
+        "./res/src/main.ts",
+        "res/libs/pixi.js.d.ts",
+        "res/libs/createjs/createjs-lib.d.ts",
+        "res/libs/createjs/preloadjs.d.ts",
+        "res/libs/createjs/soundjs.d.ts",
+        "res/libs/gsap/index.d.ts"
+    ]
+}
