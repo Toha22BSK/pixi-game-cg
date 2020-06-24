@@ -3,18 +3,28 @@ import Sprite = PIXI.Sprite;
 import Container = PIXI.Container;
 import Texture = PIXI.Texture;
 import { Place } from "./place.js";
-import { button } from "./button.js";
 let width: number = window.innerWidth;
 let height: number = window.innerHeight;
-/*let sizesound: number = Place.res.sound.texture.width;
-let sizeplace: number = Place.res.place.texture.width;
-let sizetime: number = Place.res.time.texture.width;
-let sizestart: number = Place.res.start.texture.width*0.4;
-let positionsound: number = (1024 - Place.res.sound.texture.width)/2;
-let positionplace: number = (1024 - sizeplace)/3;
-let positiontime: number = (1024 - sizetime)/4;
+/*export class menupole extends Container{
+    private textures = Place.res;
+    private eightButton: button;
+    private twelveButton: button;
+    private sixteenButton: button;
+    private positionx: number = (Place.size * 0.9)/10;
+    private positiony: number = Place.size/10;
+    public znach: number = 0;
+    constructor(){
+        super();
+        this.eightButton = new button(this.textures.eightxeight.texture, this.textures.eightxeightpress.texture, this.textures.eightxeightbring.texture, this.positionx * 4, this.positiony * 4.25,0.8);
+        this.twelveButton = new button(this.textures.twelvextwelve.texture, this.textures.twelvextwelvepress.texture, this.textures.twelvextwelvebring.texture, this.positionx * 5.75, this.positiony * 4.20, 0.8);
+        this.sixteenButton = new button(this.textures.sixteenxsixteen.texture, this.textures.sixteenxsixteenpress.texture, this.textures.sixteenxsixteenbring.texture, this.positionx * 7.75, this.positiony * 4.15, 0.8);
+        
+        this.addChild(this.eightButton);
+        this.addChild(this.twelveButton);
+        this.addChild(this.sixteenButton);
+    }
+}
 */
-
 export class logo extends Container {
     private sprite: Sprite;
 
@@ -61,6 +71,7 @@ export class time extends Container {
         //this.sprite.scale.set (, );
     }
 }
+/*
 class start extends button {
     constructor() {
         super(Place.res.start.texture, Place.res.startpress.texture, Place.res.startbring.texture, 512 - Place.res.start.texture.width * 0.4 / 2, 1024 * 0.7, 0.4)
@@ -147,3 +158,4 @@ export class buttonmenu extends Container {
 
     }
 }
+*/

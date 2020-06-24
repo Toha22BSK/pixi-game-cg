@@ -11,21 +11,33 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-define(["require", "exports", "./place.js", "./button.js"], function (require, exports, place_js_1, button_js_1) {
+define(["require", "exports", "./place.js"], function (require, exports, place_js_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.buttonmenu = exports.time = exports.places = exports.sound = exports.logo = void 0;
+    exports.time = exports.places = exports.sound = exports.logo = void 0;
     var Sprite = PIXI.Sprite;
     var Container = PIXI.Container;
     var width = window.innerWidth;
     var height = window.innerHeight;
-    /*let sizesound: number = Place.res.sound.texture.width;
-    let sizeplace: number = Place.res.place.texture.width;
-    let sizetime: number = Place.res.time.texture.width;
-    let sizestart: number = Place.res.start.texture.width*0.4;
-    let positionsound: number = (1024 - Place.res.sound.texture.width)/2;
-    let positionplace: number = (1024 - sizeplace)/3;
-    let positiontime: number = (1024 - sizetime)/4;
+    /*export class menupole extends Container{
+        private textures = Place.res;
+        private eightButton: button;
+        private twelveButton: button;
+        private sixteenButton: button;
+        private positionx: number = (Place.size * 0.9)/10;
+        private positiony: number = Place.size/10;
+        public znach: number = 0;
+        constructor(){
+            super();
+            this.eightButton = new button(this.textures.eightxeight.texture, this.textures.eightxeightpress.texture, this.textures.eightxeightbring.texture, this.positionx * 4, this.positiony * 4.25,0.8);
+            this.twelveButton = new button(this.textures.twelvextwelve.texture, this.textures.twelvextwelvepress.texture, this.textures.twelvextwelvebring.texture, this.positionx * 5.75, this.positiony * 4.20, 0.8);
+            this.sixteenButton = new button(this.textures.sixteenxsixteen.texture, this.textures.sixteenxsixteenpress.texture, this.textures.sixteenxsixteenbring.texture, this.positionx * 7.75, this.positiony * 4.15, 0.8);
+            
+            this.addChild(this.eightButton);
+            this.addChild(this.twelveButton);
+            this.addChild(this.sixteenButton);
+        }
+    }
     */
     var logo = /** @class */ (function (_super) {
         __extends(logo, _super);
@@ -79,104 +91,93 @@ define(["require", "exports", "./place.js", "./button.js"], function (require, e
         return time;
     }(Container));
     exports.time = time;
-    var start = /** @class */ (function (_super) {
-        __extends(start, _super);
-        function start() {
-            return _super.call(this, place_js_1.Place.res.start.texture, place_js_1.Place.res.startpress.texture, place_js_1.Place.res.startbring.texture, 512 - place_js_1.Place.res.start.texture.width * 0.4 / 2, 1024 * 0.7, 0.4) || this;
-        }
-        return start;
-    }(button_js_1.button));
-    var on = /** @class */ (function (_super) {
-        __extends(on, _super);
-        function on() {
-            return _super.call(this, place_js_1.Place.res.on.texture, place_js_1.Place.res.onpress.texture, place_js_1.Place.res.onbring.texture, place_js_1.Place.res.sound.texture.width + ((1024 / 2 - place_js_1.Place.res.sound.texture.width) / 2), 1024 / 10 * 5.8, 0.8) || this;
-        }
-        return on;
-    }(button_js_1.button));
-    var off = /** @class */ (function (_super) {
-        __extends(off, _super);
-        function off() {
-            return _super.call(this, place_js_1.Place.res.off.texture, place_js_1.Place.res.offpress.texture, place_js_1.Place.res.offbring.texture, place_js_1.Place.res.sound.texture.width + ((1024 / 2 - place_js_1.Place.res.sound.texture.width) / 2) * 2.4, 1024 / 10 * 5.75, 0.8) || this;
-        }
-        return off;
-    }(button_js_1.button));
-    var five = /** @class */ (function (_super) {
-        __extends(five, _super);
-        function five() {
-            return _super.call(this, place_js_1.Place.res.five.texture, place_js_1.Place.res.fivepress.texture, place_js_1.Place.res.fivebring.texture, place_js_1.Place.res.time.texture.width + ((1024 * 0.9 - place_js_1.Place.res.time.texture.width) / 8) * 1, 1024 / 10 * 3.25, 0.8) || this;
-        }
-        return five;
-    }(button_js_1.button));
-    var ten = /** @class */ (function (_super) {
-        __extends(ten, _super);
-        function ten() {
-            return _super.call(this, place_js_1.Place.res.ten.texture, place_js_1.Place.res.tenpress.texture, place_js_1.Place.res.tenbring.texture, place_js_1.Place.res.time.texture.width + ((1024 * 0.9 - place_js_1.Place.res.time.texture.width) / 8) * 2.5, 1024 / 10 * 3.20, 0.8) || this;
-        }
-        return ten;
-    }(button_js_1.button));
-    var fifteen = /** @class */ (function (_super) {
-        __extends(fifteen, _super);
-        function fifteen() {
-            return _super.call(this, place_js_1.Place.res.fifteen.texture, place_js_1.Place.res.fifteenpress.texture, place_js_1.Place.res.fifteenbring.texture, place_js_1.Place.res.time.texture.width + ((1024 * 0.9 - place_js_1.Place.res.time.texture.width) / 8) * 4, 1024 / 10 * 3.15, 0.8) || this;
-        }
-        return fifteen;
-    }(button_js_1.button));
-    var thirty = /** @class */ (function (_super) {
-        __extends(thirty, _super);
-        function thirty() {
-            return _super.call(this, place_js_1.Place.res.thirty.texture, place_js_1.Place.res.thirtypress.texture, place_js_1.Place.res.thirtybring.texture, place_js_1.Place.res.time.texture.width + ((1024 * 0.9 - place_js_1.Place.res.time.texture.width) / 8) * 5.5, 1024 / 10 * 3.10, 0.8) || this;
-        }
-        return thirty;
-    }(button_js_1.button));
-    var eightxeight = /** @class */ (function (_super) {
-        __extends(eightxeight, _super);
-        function eightxeight() {
-            return _super.call(this, place_js_1.Place.res.eightxeight.texture, place_js_1.Place.res.eightxeightpress.texture, place_js_1.Place.res.eightxeightbring.texture, place_js_1.Place.res.places.texture.width + ((1024 * 0.9 - place_js_1.Place.res.places.texture.width) / 4) * 0.85, 1024 / 10 * 4.5, 0.8) || this;
-        }
-        return eightxeight;
-    }(button_js_1.button));
-    var twelvextwelve = /** @class */ (function (_super) {
-        __extends(twelvextwelve, _super);
-        function twelvextwelve() {
-            return _super.call(this, place_js_1.Place.res.twelvextwelve.texture, place_js_1.Place.res.twelvextwelvepress.texture, place_js_1.Place.res.twelvextwelvebring.texture, place_js_1.Place.res.places.texture.width + ((1024 * 0.9 - place_js_1.Place.res.places.texture.width) / 4) * 1.7, 1024 / 10 * 4.45, 0.8) || this;
-        }
-        return twelvextwelve;
-    }(button_js_1.button));
-    var sixteenxsixteen = /** @class */ (function (_super) {
-        __extends(sixteenxsixteen, _super);
-        function sixteenxsixteen() {
-            return _super.call(this, place_js_1.Place.res.sixteenxsixteen.texture, place_js_1.Place.res.sixteenxsixteenpress.texture, place_js_1.Place.res.sixteenxsixteenbring.texture, place_js_1.Place.res.places.texture.width + ((1024 * 0.9 - place_js_1.Place.res.places.texture.width) / 4) * 2.8, 1024 / 10 * 4.40, 0.8) || this;
-        }
-        return sixteenxsixteen;
-    }(button_js_1.button));
-    var buttonmenu = /** @class */ (function (_super) {
-        __extends(buttonmenu, _super);
-        function buttonmenu() {
-            var _this = _super.call(this) || this;
-            _this.startButton = new start();
-            _this.onButton = new on();
-            _this.offButton = new off();
-            _this.fiveButton = new five();
-            _this.tenButton = new ten();
-            _this.fifteenButton = new fifteen();
-            _this.thirtyButton = new thirty();
-            _this.eightxeightButton = new eightxeight();
-            _this.twelvextwelveButton = new twelvextwelve();
-            _this.sixteenxsixteenButton = new sixteenxsixteen();
-            _this.addChild(_this.startButton);
-            _this.addChild(_this.onButton);
-            _this.addChild(_this.offButton);
-            _this.addChild(_this.fiveButton);
-            _this.addChild(_this.tenButton);
-            _this.addChild(_this.fifteenButton);
-            _this.addChild(_this.thirtyButton);
-            _this.addChild(_this.eightxeightButton);
-            _this.addChild(_this.twelvextwelveButton);
-            _this.addChild(_this.sixteenxsixteenButton);
-            return _this;
-        }
-        return buttonmenu;
-    }(Container));
-    exports.buttonmenu = buttonmenu;
 });
+/*
+class start extends button {
+    constructor() {
+        super(Place.res.start.texture, Place.res.startpress.texture, Place.res.startbring.texture, 512 - Place.res.start.texture.width * 0.4 / 2, 1024 * 0.7, 0.4)
+    }
+}
+class on extends button {
+    constructor() {
+        super(Place.res.on.texture, Place.res.onpress.texture, Place.res.onbring.texture, Place.res.sound.texture.width + ((1024 / 2 - Place.res.sound.texture.width) / 2), 1024 / 10 * 5.8, 0.8)
+    }
+}
+class off extends button {
+    constructor() {
+        super(Place.res.off.texture, Place.res.offpress.texture, Place.res.offbring.texture, Place.res.sound.texture.width + ((1024 / 2 - Place.res.sound.texture.width) / 2) * 2.4, 1024 / 10 * 5.75, 0.8)
+    }
+}
+class five extends button {
+    constructor() {
+        super(Place.res.five.texture, Place.res.fivepress.texture, Place.res.fivebring.texture, Place.res.time.texture.width + ((1024 * 0.9 - Place.res.time.texture.width) / 8) * 1, 1024 / 10 * 3.25, 0.8)
+    }
+}
+class ten extends button {
+    constructor() {
+        super(Place.res.ten.texture, Place.res.tenpress.texture, Place.res.tenbring.texture, Place.res.time.texture.width + ((1024 * 0.9 - Place.res.time.texture.width) / 8) * 2.5, 1024 / 10 * 3.20, 0.8)
+    }
+}
+class fifteen extends button {
+    constructor() {
+        super(Place.res.fifteen.texture, Place.res.fifteenpress.texture, Place.res.fifteenbring.texture, Place.res.time.texture.width + ((1024 * 0.9 - Place.res.time.texture.width) / 8) * 4, 1024 / 10 * 3.15, 0.8)
+    }
+}
+class thirty extends button {
+    constructor() {
+        super(Place.res.thirty.texture, Place.res.thirtypress.texture, Place.res.thirtybring.texture, Place.res.time.texture.width + ((1024 * 0.9 - Place.res.time.texture.width) / 8) * 5.5, 1024 / 10 * 3.10, 0.8)
+    }
+}
+class eightxeight extends button {
+    constructor() {
+        super(Place.res.eightxeight.texture, Place.res.eightxeightpress.texture, Place.res.eightxeightbring.texture, Place.res.places.texture.width + ((1024 * 0.9 - Place.res.places.texture.width) / 4) * 0.85, 1024 / 10 * 4.5, 0.8)
+    }
+}
+class twelvextwelve extends button {
+    constructor() {
+        super(Place.res.twelvextwelve.texture, Place.res.twelvextwelvepress.texture, Place.res.twelvextwelvebring.texture, Place.res.places.texture.width + ((1024 * 0.9 - Place.res.places.texture.width) / 4) * 1.7, 1024 / 10 * 4.45, 0.8)
+    }
+}
+class sixteenxsixteen extends button {
+    constructor() {
+        super(Place.res.sixteenxsixteen.texture, Place.res.sixteenxsixteenpress.texture, Place.res.sixteenxsixteenbring.texture, Place.res.places.texture.width + ((1024 * 0.9 - Place.res.places.texture.width) / 4) * 2.8, 1024 / 10 * 4.40, 0.8)
+    }
+}
+export class buttonmenu extends Container {
+    public startButton: start;
+    public onButton: on;
+    public offButton: off;
+    public fiveButton: five;
+    public tenButton: ten;
+    public fifteenButton: fifteen;
+    public thirtyButton: thirty;
+    public eightxeightButton: eightxeight;
+    public twelvextwelveButton: twelvextwelve;
+    public sixteenxsixteenButton: sixteenxsixteen;
+    constructor() {
+        super();
+        this.startButton = new start();
+        this.onButton = new on();
+        this.offButton = new off();
+        this.fiveButton = new five();
+        this.tenButton = new ten();
+        this.fifteenButton = new fifteen();
+        this.thirtyButton = new thirty();
+        this.eightxeightButton = new eightxeight();
+        this.twelvextwelveButton = new twelvextwelve();
+        this.sixteenxsixteenButton = new sixteenxsixteen();
+        this.addChild(this.startButton);
+        this.addChild(this.onButton);
+        this.addChild(this.offButton);
+        this.addChild(this.fiveButton);
+        this.addChild(this.tenButton);
+        this.addChild(this.fifteenButton);
+        this.addChild(this.thirtyButton);
+        this.addChild(this.eightxeightButton);
+        this.addChild(this.twelvextwelveButton);
+        this.addChild(this.sixteenxsixteenButton);
+
+    }
+}
+*/ 
 //# sourceMappingURL=menugame.js.map

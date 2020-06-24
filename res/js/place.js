@@ -11,7 +11,7 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-define(["require", "exports", "./menugame.js"], function (require, exports, menugame_js_1) {
+define(["require", "exports", "./menugame.js", "./Button.js", "./preview"], function (require, exports, menugame_js_1, Button_js_1, preview_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.Place = void 0;
@@ -26,18 +26,23 @@ define(["require", "exports", "./menugame.js"], function (require, exports, menu
             _this.Sound = new menugame_js_1.sound();
             _this.Places = new menugame_js_1.places();
             _this.Time = new menugame_js_1.time();
-            _this.Buttonmenu = new menugame_js_1.buttonmenu();
+            _this.Preview = new preview_1.preview(_this);
+            _this.Buttonplace = new Button_js_1.buttonplace();
             _this.backgroundSprite = new Sprite(Place.res.background.texture);
             _this.backgroundSprite.width = Place.size;
             _this.backgroundSprite.height = Place.size;
             _this.addChild(_this.backgroundSprite);
-            _this.addChild(_this.Logo);
-            _this.addChild(_this.Sound);
-            _this.addChild(_this.Places);
-            _this.addChild(_this.Time);
-            _this.addChild(_this.Buttonmenu);
+            _this.addChild(_this.Preview);
             return _this;
         }
+        Place.prototype.showMenu = function () {
+            this.removeChild(this.Preview);
+            this.addChild(this.Logo);
+            this.addChild(this.Sound);
+            this.addChild(this.Places);
+            this.addChild(this.Time);
+            this.addChild(this.Buttonplace);
+        };
         Place.size = 1024;
         return Place;
     }(Container));

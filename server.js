@@ -7,7 +7,4 @@ app.get('/', (req, res) => {
     res.sendFile('index.html', { root: 'res' });
 });
 
-app.get('/pixi', (req, res) => {
-    res.sendFile('index.html', { root: 'res' });
-});
 app.listen(8080);
