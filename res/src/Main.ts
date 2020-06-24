@@ -47,6 +47,7 @@ loader.add("sixteenxsixteenbring", "res/media/pictures/16x16bring.png");
 loader.add("sixteenxsixteenpress", "res/media/pictures/16x16press.png");
 loader.add("places", "res/media/pictures/place.png");
 loader.add("sound", "res/media/pictures/sound.png");
+loader.add("music", "res/media/pictures/music.png");
 loader.add("time", "res/media/pictures/time.png");
 loader.add("start", "res/media/pictures/start.png");
 loader.add("startbring", "res/media/pictures/start2.png");

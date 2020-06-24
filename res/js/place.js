@@ -28,6 +28,10 @@ define(["require", "exports", "./menugame.js", "./Button.js", "./preview"], func
             _this.Time = new menugame_js_1.time();
             _this.Preview = new preview_1.preview(_this);
             _this.Buttonplace = new Button_js_1.buttonplace();
+            _this.Music = new menugame_js_1.music();
+            _this.StartButton = new Button_js_1.startbutton(_this);
+            _this.Buttonsound = new Button_js_1.soundbuttom();
+            _this.Buttontime = new Button_js_1.buttontime();
             _this.backgroundSprite = new Sprite(Place.res.background.texture);
             _this.backgroundSprite.width = Place.size;
             _this.backgroundSprite.height = Place.size;
@@ -42,6 +46,10 @@ define(["require", "exports", "./menugame.js", "./Button.js", "./preview"], func
             this.addChild(this.Places);
             this.addChild(this.Time);
             this.addChild(this.Buttonplace);
+            this.addChild(this.Buttontime);
+            this.addChild(this.Music);
+            this.addChild(this.Buttonsound);
+            this.addChild(this.StartButton);
         };
         Place.size = 1024;
         return Place;
