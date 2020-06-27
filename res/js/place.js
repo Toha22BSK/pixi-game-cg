@@ -11,7 +11,7 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-define(["require", "exports", "./menugame.js", "./Button.js", "./preview"], function (require, exports, menugame_js_1, Button_js_1, preview_1) {
+define(["require", "exports", "./menugame.js", "./Button.js", "./preview.js", "./Game.js"], function (require, exports, menugame_js_1, Button_js_1, preview_js_1, Game_js_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.Place = void 0;
@@ -22,16 +22,18 @@ define(["require", "exports", "./menugame.js", "./Button.js", "./preview"], func
         function Place(resources) {
             var _this = _super.call(this) || this;
             Place.res = resources;
+            _this.PauseButton = new Button_js_1.pausebutton(_this);
             _this.Logo = new menugame_js_1.logo();
             _this.Sound = new menugame_js_1.sound();
             _this.Places = new menugame_js_1.places();
             _this.Time = new menugame_js_1.time();
-            _this.Preview = new preview_1.preview(_this);
+            _this.Preview = new preview_js_1.preview(_this);
             _this.Buttonplace = new Button_js_1.buttonplace();
             _this.Music = new menugame_js_1.music();
             _this.StartButton = new Button_js_1.startbutton(_this);
             _this.Buttonsound = new Button_js_1.soundbuttom();
             _this.Buttontime = new Button_js_1.buttontime();
+            _this.PlayButton = new Button_js_1.playbutton(_this);
             _this.backgroundSprite = new Sprite(Place.res.background.texture);
             _this.backgroundSprite.width = Place.size;
             _this.backgroundSprite.height = Place.size;
@@ -50,6 +52,32 @@ define(["require", "exports", "./menugame.js", "./Button.js", "./preview"], func
             this.addChild(this.Music);
             this.addChild(this.Buttonsound);
             this.addChild(this.StartButton);
+        };
+        Place.prototype.showGameField = function (sizefield, minute) {
+            this.GameField = new Game_js_1.gamefield(sizefield, minute);
+            this.removeChild(this.Logo);
+            this.removeChild(this.Sound);
+            this.removeChild(this.Places);
+            this.removeChild(this.Time);
+            this.removeChild(this.Buttonplace);
+            this.removeChild(this.Buttontime);
+            this.removeChild(this.Music);
+            this.removeChild(this.Buttonsound);
+            this.removeChild(this.StartButton);
+            this.addChild(this.GameField);
+            this.addChild(this.PauseButton);
+        };
+        Place.prototype.PauseGame = function () {
+            this.backgroundPause = new Sprite(Place.res.black.texture);
+            this.backgroundPause.width = Place.size;
+            this.backgroundPause.height = Place.size;
+            this.backgroundPause.alpha = 0.5;
+            this.addChild(this.backgroundPause);
+            this.addChild(this.PlayButton);
+        };
+        Place.prototype.ResumeGame = function () {
+            this.removeChild(this.backgroundPause);
+            this.removeChild(this.PlayButton);
         };
         Place.size = 1024;
         return Place;

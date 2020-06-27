@@ -2,13 +2,15 @@ import Application = PIXI.Application;
 import Sprite = PIXI.Sprite;
 import Container = PIXI.Container;
 import { logo, sound, places, time, music } from "./menugame.js";
-import { buttonplace, buttontime, soundbuttom, startbutton} from "./Button.js"
-import { preview } from "./preview"
+import { buttonplace, buttontime, soundbuttom, startbutton, playbutton, pausebutton} from "./Button.js";
+import { preview } from "./preview.js";
+import { gamefield } from "./Game.js";
 
 export class Place extends Container {
     public static size: number = 1024;
     public static res: any;
     private backgroundSprite: Sprite;
+    private backgroundPause: Sprite;
     private Logo: logo;
     private Sound: sound;
     private Places: places;
@@ -19,10 +21,14 @@ export class Place extends Container {
     private Preview: preview;
     private Music: music;
     private StartButton: startbutton;
+    private GameField: gamefield;
+    private PlayButton: playbutton;
+    private PauseButton: pausebutton;
 
     constructor(resources: any) {
         super();
         Place.res = resources;
+        this.PauseButton = new pausebutton(this);
         this.Logo = new logo();
         this.Sound = new sound();
         this.Places = new places();
@@ -33,6 +39,7 @@ export class Place extends Container {
         this.StartButton = new startbutton(this);
         this.Buttonsound = new soundbuttom();
         this.Buttontime = new buttontime();
+        this.PlayButton = new playbutton(this);
         this.backgroundSprite = new Sprite(Place.res.background.texture);
         this.backgroundSprite.width = Place.size;
         this.backgroundSprite.height = Place.size;
@@ -50,6 +57,32 @@ export class Place extends Container {
         this.addChild(this.Music);
         this.addChild(this.Buttonsound);
         this.addChild(this.StartButton);
+    }
+    public showGameField(sizefield: number, minute: number){
+        this.GameField = new gamefield(sizefield, minute);
+        this.removeChild(this.Logo);
+        this.removeChild(this.Sound);
+        this.removeChild(this.Places);
+        this.removeChild(this.Time);
+        this.removeChild(this.Buttonplace);
+        this.removeChild(this.Buttontime);
+        this.removeChild(this.Music);
+        this.removeChild(this.Buttonsound);
+        this.removeChild(this.StartButton);
+        this.addChild(this.GameField);
+        this.addChild(this.PauseButton);
+    }
+    public PauseGame(){
+        this.backgroundPause = new Sprite(Place.res.black.texture);
+        this.backgroundPause.width = Place.size;
+        this.backgroundPause.height = Place.size;
+        this.backgroundPause.alpha = 0.5;
+        this.addChild(this.backgroundPause);
+        this.addChild(this.PlayButton);
+    }
+    public ResumeGame(){
+        this.removeChild(this.backgroundPause);
+        this.removeChild(this.PlayButton);
     }
 
 }

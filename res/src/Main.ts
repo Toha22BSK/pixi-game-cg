@@ -45,6 +45,14 @@ loader.add("twelvextwelvepress", "res/media/pictures/12x12press.png");
 loader.add("sixteenxsixteen", "res/media/pictures/16x16.png");
 loader.add("sixteenxsixteenbring", "res/media/pictures/16x16bring.png");
 loader.add("sixteenxsixteenpress", "res/media/pictures/16x16press.png");
+loader.add("soundbuttonon", "res/media/pictures/soundbuttonon.png");
+loader.add("soundbuttonoff", "res/media/pictures/soundbuttonoff.png");
+loader.add("musicbuttonon", "res/media/pictures/musicbuttonon.png");
+loader.add("musicbuttonoff", "res/media/pictures/musicbuttonoff.png");
+loader.add("pausebutton", "res/media/pictures/pause.png");
+loader.add("pausebuttonpress", "res/media/pictures/pausepress.png");
+loader.add("playbutton", "res/media/pictures/play.png");
+loader.add("playbuttonpress", "res/media/pictures/playpress.png")
 loader.add("places", "res/media/pictures/place.png");
 loader.add("sound", "res/media/pictures/sound.png");
 loader.add("music", "res/media/pictures/music.png");
@@ -53,6 +61,9 @@ loader.add("start", "res/media/pictures/start.png");
 loader.add("startbring", "res/media/pictures/start2.png");
 loader.add("startpress", "res/media/pictures/start3.png");
 loader.add("logo", "res/media/pictures/logo.png");
+loader.add("score", "res/media/pictures/score.png");
+loader.add("timergame", "res/media/pictures/timeforgame.png");
+loader.add("black", "res/media/pictures/black.png");
 
 loader.load(setup);
 

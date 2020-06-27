@@ -3,13 +3,17 @@ import Sprite = PIXI.Sprite;
 import Container = PIXI.Container;
 import Texture = PIXI.Texture;
 import { Place } from "./place.js";
+import { places } from "./menugame.js";
 
 let positionstockX: number = (1024 * 0.9) / 10;
 let positionstockY: number = 1024 / 10;
+let timeforgame: number = 5;
+let sizeField: number = 8;
+let soundvalue: boolean = true;
+let musicvalue: boolean = true;
 
 export class buttonplace extends Container {
 
-    public valueplace: number = 0;
     private eightsprite: Sprite;
     private twelvesprite: Sprite;
     private sixteensprite: Sprite;
@@ -34,18 +38,12 @@ export class buttonplace extends Container {
         this.twelvesprite.buttonMode = true;
         this.sixteensprite.interactive = true;
         this.sixteensprite.buttonMode = true;
-        this.eightsprite.position.x = positionstockX*4;
-        this.eightsprite.position.y = positionstockY*4.95;
-        this.eightsprite.scale.x = 0.8;
-        this.eightsprite.scale.y = 0.8;
-        this.twelvesprite.position.x = positionstockX * 5.7;
-        this.twelvesprite.position.y = positionstockY * 4.85;
-        this.twelvesprite.scale.x = 0.8;
-        this.twelvesprite.scale.y = 0.8;
-        this.sixteensprite.position.x = positionstockX * 7.75;
-        this.sixteensprite.position.y = positionstockY * 4.7;
-        this.sixteensprite.scale.x = 0.8;
-        this.sixteensprite.scale.y = 0.8;
+        this.eightsprite.position.set(positionstockX * 4, positionstockY * 4.95);
+        this.eightsprite.scale.set(0.8, 0.8);
+        this.twelvesprite.position.set(positionstockX * 5.7, positionstockY * 4.85);
+        this.twelvesprite.scale.set(0.8, 0.8);
+        this.sixteensprite.position.set(positionstockX * 7.75, positionstockY * 4.7);
+        this.sixteensprite.scale.set(0.8, 0.8);
 
         this.optionbuttom(this.eightsprite, this.twelvesprite, this.sixteensprite, this.eightpress, this.eightbring, this.eightstock, this.twelvestock, this.sixteenstock, 8);
         this.optionbuttom(this.twelvesprite, this.eightsprite, this.sixteensprite, this.twelvepress, this.twelvebring, this.twelvestock, this.eightstock, this.sixteenstock, 12);
@@ -58,7 +56,7 @@ export class buttonplace extends Container {
         this.addChild(this.twelvesprite);
         this.addChild(this.sixteensprite);
     }
-    private optionbuttom(use: any, use2: any, use3: any, press: any, bring: any, stock: any, stock2: any, stock3: any, value: number){
+    private optionbuttom(use: any, use2: any, use3: any, press: any, bring: any, stock: any, stock2: any, stock3: any, value: number) {
         use.on("mouseover", function (): void {
             if (use.texture != press) {
                 use.texture = bring;
@@ -74,14 +72,13 @@ export class buttonplace extends Container {
             use.texture = press;
             use2.texture = stock2;
             use3.texture = stock3;
-            this.valueplace = value;
+            sizeField = value;
         }.bind(this));
-    }  
+    }
 }
-   
-export class buttontime extends Container{
 
-    public valuetime: number = 0;
+export class buttontime extends Container {
+
     private fivesprite: Sprite;
     private tensprite: Sprite;
     private fifteensprite: Sprite;
@@ -113,22 +110,14 @@ export class buttontime extends Container{
         this.fifteensprite.buttonMode = true;
         this.thirtysprite.interactive = true;
         this.thirtysprite.buttonMode = true;
-        this.fivesprite.position.x = positionstockX * 4.15;
-        this.fivesprite.position.y = positionstockY * 3.90;
-        this.fivesprite.scale.x = 0.8;
-        this.fivesprite.scale.y = 0.8;
-        this.tensprite.position.x = positionstockX * 5.5;
-        this.tensprite.position.y = positionstockY * 3.8;
-        this.tensprite.scale.x = 0.8;
-        this.tensprite.scale.y = 0.8;
-        this.fifteensprite.position.x = positionstockX * 7;
-        this.fifteensprite.position.y = positionstockY * 3.7;
-        this.fifteensprite.scale.x = 0.8;
-        this.fifteensprite.scale.y = 0.8;
-        this.thirtysprite.position.x = positionstockX * 8.5;
-        this.thirtysprite.position.y = positionstockY * 3.6;
-        this.thirtysprite.scale.x = 0.8;
-        this.thirtysprite.scale.y = 0.8;
+        this.fivesprite.position.set(positionstockX * 4.15, positionstockY * 3.9);
+        this.fivesprite.scale.set(0.8, 0.8);
+        this.tensprite.position.set(positionstockX * 5.5, positionstockY * 3.8);
+        this.tensprite.scale.set(0.8, 0.8);
+        this.fifteensprite.position.set(positionstockX * 7, positionstockY * 3.7);
+        this.fifteensprite.scale.set(0.8, 0.8);
+        this.thirtysprite.position.set(positionstockX * 8.5, positionstockY * 3.6);
+        this.thirtysprite.scale.set(0.8, 0.8);
 
         this.optionbuttom(this.fivesprite, this.tensprite, this.fifteensprite, this.thirtysprite, this.fivepress, this.fivebring, this.fivestock, this.tenstock, this.fifteenstock, this.thirtystock, 5);
         this.optionbuttom(this.tensprite, this.fivesprite, this.fifteensprite, this.thirtysprite, this.tenpress, this.tenbring, this.tenstock, this.fivestock, this.fifteenstock, this.thirtystock, 10);
@@ -161,12 +150,11 @@ export class buttontime extends Container{
             use2.texture = stock2;
             use3.texture = stock3;
             use4.texture = stock4;
-            this.valuetime = value;
+            timeforgame = value;
         }.bind(this));
-    }  
+    }
 }
-export class soundbuttom extends Container{
-
+export class soundbuttom extends Container {
     private onsoundsprite: Sprite;
     private offsoundsprite: Sprite;
     private onmusicsprite: Sprite;
@@ -178,7 +166,7 @@ export class soundbuttom extends Container{
     private offbring: Texture = Place.res.offbring.texture;
     private offpress: Texture = Place.res.offpress.texture;
 
-    constructor(){
+    constructor() {
         super();
         this.onsoundsprite = new Sprite();
         this.onmusicsprite = new Sprite();
@@ -193,26 +181,19 @@ export class soundbuttom extends Container{
         this.offmusicsprite.interactive = true;
         this.offmusicsprite.buttonMode = true;
 
-        this.onsoundsprite.position.x = positionstockX * 3.75;
-        this.onsoundsprite.position.y = positionstockY * 6;
-        this.onsoundsprite.scale.x = 0.8;
-        this.onsoundsprite.scale.y = 0.8;
-        this.onmusicsprite.position.x = positionstockX * 4.5;
-        this.onmusicsprite.position.y = positionstockY * 2.9;
-        this.onmusicsprite.scale.x = 0.8;
-        this.onmusicsprite.scale.y = 0.8;
-        this.offsoundsprite.position.x = positionstockX * 5.75;
-        this.offsoundsprite.position.y = positionstockY * 5.85;
-        this.offsoundsprite.scale.x = 0.8;
-        this.offsoundsprite.scale.y = 0.8;
-        this.offmusicsprite.position.x = positionstockX * 6.5;
-        this.offmusicsprite.position.y = positionstockY * 2.75;
-        this.offmusicsprite.scale.set (0.8, 0.8);
+        this.onsoundsprite.position.set(positionstockX * 3.75, positionstockY * 6);
+        this.onsoundsprite.scale.set(0.8, 0.8);
+        this.onmusicsprite.position.set(positionstockX * 4.5, positionstockY * 2.9);
+        this.onmusicsprite.scale.set(0.8, 0.8);
+        this.offsoundsprite.position.set(positionstockX * 5.75, positionstockY * 5.85);
+        this.offsoundsprite.scale.set(0.8, 0.8);
+        this.offmusicsprite.position.set(positionstockX * 6.5, positionstockY * 2.75);
+        this.offmusicsprite.scale.set(0.8, 0.8);
 
-        this.optionbuttom(this.onmusicsprite, this.offmusicsprite, this.onpress, this.onbring, this.onstock, this.offstock);
-        this.optionbuttom(this.offmusicsprite, this.onmusicsprite, this.offpress, this.offbring, this.offstock, this.onstock);
-        this.optionbuttom(this.onsoundsprite, this.offsoundsprite, this.onpress, this.onbring, this.onstock, this.offstock);
-        this.optionbuttom(this.offsoundsprite, this.onsoundsprite, this.offpress, this.offbring, this.offstock, this.onstock);
+        this.optionbuttom(this.onmusicsprite, this.offmusicsprite, this.onpress, this.onbring, this.onstock, this.offstock, true, 0);
+        this.optionbuttom(this.offmusicsprite, this.onmusicsprite, this.offpress, this.offbring, this.offstock, this.onstock, false, 0);
+        this.optionbuttom(this.onsoundsprite, this.offsoundsprite, this.onpress, this.onbring, this.onstock, this.offstock, true, 1);
+        this.optionbuttom(this.offsoundsprite, this.onsoundsprite, this.offpress, this.offbring, this.offstock, this.onstock, false, 1);
 
         this.onsoundsprite.texture = this.onstock;
         this.onmusicsprite.texture = this.onstock;
@@ -224,7 +205,7 @@ export class soundbuttom extends Container{
         this.addChild(this.offsoundsprite);
         this.addChild(this.offmusicsprite);
     }
-    private optionbuttom(use: any, use2: any, press: any, bring: any, stock: any, stock2: any) {
+    private optionbuttom(use: any, use2: any, press: any, bring: any, stock: any, stock2: any, valuesound: boolean, who: number) {
         use.on("mouseover", function (): void {
             if (use.texture != press) {
                 use.texture = bring;
@@ -239,26 +220,31 @@ export class soundbuttom extends Container{
         use.on("mouseup", function (): void {
             use.texture = press;
             use2.texture = stock2;
-
+            if (who == 1){
+                soundvalue = valuesound;
+            }else{
+                musicvalue = valuesound;
+            }
         }.bind(this));
-    }  
+    }
 }
-export class startbutton extends Container{
+export class startbutton extends Container {
 
     private startsprite: Sprite;
     private startstock: Texture = Place.res.start.texture;
     private startbring: Texture = Place.res.startbring.texture;
     private startpress: Texture = Place.res.startpress.texture;
 
-    constructor(place: Place){
+    constructor(place: Place) {
 
         super();
         this.startsprite = new Sprite();
         this.startsprite.interactive = true;
         this.startsprite.buttonMode = true;
+        this.startsprite.anchor.x = 0.5;
 
-        this.startsprite.position.set(1024 / 2 - this.startstock.width*0.4/2, positionstockY * 7);
-        this.startsprite.scale.set (0.4, 0.4);
+        this.startsprite.position.set(1024 / 2, positionstockY * 7);
+        this.startsprite.scale.set(0.4, 0.4);
 
         this.startsprite.on("mouseover", function (): void {
             if (this.startsprite.texture != this.startpress) {
@@ -273,10 +259,181 @@ export class startbutton extends Container{
 
         this.startsprite.on("mouseup", function (): void {
             this.startsprite.texture = this.startpress;
+            this.emit("click");
+            place.showGameField(sizeField, timeforgame);
         }.bind(this));
 
         this.startsprite.texture = this.startstock;
 
         this.addChild(this.startsprite);
+    }
+}
+export class soundgamebutton extends Container {
+    private soundforgame: Sprite;
+    private soundbuttonon: Texture = Place.res.soundbuttonon.texture;
+    private soundbuttonoff: Texture = Place.res.soundbuttonoff.texture;
+    constructor() {
+        super();
+        this.soundforgame = new Sprite();
+        this.soundforgame.position.set(1024 * 0.95, 1024 * 0.25);
+        this.soundforgame.scale.set(0.1);
+        this.soundforgame.anchor.set(0.5);
+        this.soundforgame.interactive = true;
+        this.soundforgame.buttonMode = true;
+
+        this.soundforgame.on("mouseover", function (): void {
+            if (soundvalue == true) {
+                this.soundforgame.texture = this.soundbuttonoff;
+            } else {
+                this.soundforgame.texture = this.soundbuttonon;
+            }
+        }.bind(this));
+        this.soundforgame.on("mouseout", function (): void {
+            if (soundvalue == true) {
+                this.soundforgame.texture = this.soundbuttonon;
+            } else {
+                this.soundforgame.texture = this.soundbuttonoff;
+            }
+        }.bind(this));
+        this.soundforgame.on("mouseup", function (): void {
+            if (soundvalue == true) {
+                this.soundforgame.texture = this.soundbuttonoff;
+                soundvalue = false;
+            } else {
+                this.soundforgame.texture = this.soundbuttonon;
+                soundvalue = true;
+            }
+            this.emit("click");
+        }.bind(this));
+
+        if (soundvalue == true) {
+            this.soundforgame.texture = this.soundbuttonon;
+        } else {
+            this.soundforgame.texture = this.soundbuttonoff;
+        }
+
+        this.addChild(this.soundforgame);
+    }
+}
+export class musicgamebutton extends Container {
+    private musicforgame: Sprite;
+    private musicbuttonon: Texture = Place.res.musicbuttonon.texture;
+    private musicbuttonoff: Texture = Place.res.musicbuttonoff.texture;
+
+    constructor() {
+        super();
+        this.musicforgame = new Sprite();
+        this.musicforgame.position.set(1024 * 0.05, 1024 * 0.25);
+        this.musicforgame.scale.set(0.05);
+        this.musicforgame.anchor.set(0.5);
+        this.musicforgame.interactive = true;
+        this.musicforgame.buttonMode = true;
+
+        this.musicforgame.on("mouseover", function (): void {
+            if (musicvalue == true) {
+                this.musicforgame.texture = this.musicbuttonoff;
+            } else {
+                this.musicforgame.texture = this.musicbuttonon;
+            }
+        }.bind(this));
+        this.musicforgame.on("mouseout", function (): void {
+            if (musicvalue == true) {
+                this.musicforgame.texture = this.musicbuttonon;
+            } else {
+                this.musicforgame.texture = this.musicbuttonoff;
+            }
+        }.bind(this));
+        this.musicforgame.on("mouseup", function (): void {
+            if (musicvalue == true) {
+                this.musicforgame.texture = this.musicbuttonoff;
+                musicvalue = false;
+            } else {
+                this.musicforgame.texture = this.musicbuttonon;
+                musicvalue = true;
+            }
+            this.emit("click");
+        }.bind(this));
+
+        if (musicvalue == true) {
+            this.musicforgame.texture = this.musicbuttonon;
+        } else {
+            this.musicforgame.texture = this.musicbuttonoff;
+        }
+
+        this.addChild(this.musicforgame);
+    }
+}
+export class pausebutton extends Container {
+    private pausegame: Sprite;
+    private pausebutton: Texture = Place.res.pausebutton.texture;
+    private pausebuttonpress: Texture = Place.res.pausebuttonpress.texture;
+    constructor(place: Place) {
+        super();
+        this.pausegame = new Sprite();
+        this.pausegame.position.set(1024 / 2, 1024 * 0.1);
+        this.pausegame.scale.set(0.5);
+        this.pausegame.anchor.set(0.5);
+        this.pausegame.interactive = true;
+        this.pausegame.buttonMode = true;
+
+        this.pausegame.on("mouseover", function (): void {
+            this.pausegame.texture = this.pausebuttonpress;
+        }.bind(this));
+
+        this.pausegame.on("mouseout", function (): void {
+            this.pausegame.texture = this.pausebutton;
+        }.bind(this));
+
+        this.pausegame.on("mouseup", function (): void {
+            this.pausegame.texture = this.pausebuttonpress;
+            this.emit("click");
+            
+            setTimeout(function () {
+                this.pausegame.texture = this.pausebutton;
+                place.PauseGame();
+            }.bind(this), 200);
+        }.bind(this));
+
+        this.pausegame.texture = this.pausebutton;
+
+        this.addChild(this.pausegame);
+    }
+}
+
+export class playbutton extends Container {
+    private playgame: Sprite;
+    private playbutton: Texture = Place.res.playbutton.texture;
+    private playbuttonpress: Texture = Place.res.playbuttonpress.texture;
+    constructor(place: Place) {
+        super();
+ 
+        this.playgame = new Sprite();
+        this.playgame.position.set(1024 / 2, 1024 / 2);
+        this.playgame.anchor.set(0.5);
+        this.playgame.scale.set(0.5);
+        this.playgame.interactive = true;
+        this.playgame.buttonMode = true;
+ 
+
+        this.playgame.on("mouseover", function (): void {
+            this.playgame.texture = this.playbuttonpress;
+        }.bind(this));
+
+        this.playgame.on("mouseout", function (): void {
+            this.playgame.texture = this.playbutton;
+        }.bind(this));
+
+        this.playgame.on("mouseup", function (): void {
+            this.playgame.texture = this.playbuttonpress;
+            this.emit("click");
+            setTimeout(function () {
+                this.playgame.texture = this.playbutton;
+                place.ResumeGame();
+            }.bind(this), 200);
+        }.bind(this));
+
+        this.playgame.texture = this.playbutton;
+
+        this.addChild(this.playgame);
     }
 }
