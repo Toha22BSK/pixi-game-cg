@@ -11,7 +11,7 @@
     "compileOnSave": true,
     "exclude": [],
     "files": [
-        "./res/src/main.ts",
+        "./res/src/Main.ts",
         "res/libs/pixi.js.d.ts",
         "res/libs/createjs/createjs-lib.d.ts",
         "res/libs/createjs/preloadjs.d.ts",

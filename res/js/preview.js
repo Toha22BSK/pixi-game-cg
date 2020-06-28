@@ -30,7 +30,7 @@ define(["require", "exports", "./place.js"], function (require, exports, place_j
             _this.sprite.position.x = place_js_1.Place.size / 2 - place_js_1.Place.res.logo.texture.width / 2;
             _this.sprite.position.y = place_js_1.Place.size / 2 - place_js_1.Place.res.logo.texture.height / 2;
             _this.alpha = 0.9;
-            //this.animation = TweenLite.to(this.sprite, 1, {scale: 1});
+            _this.animationlogo();
             _this.sprite.on("mouseover", function () {
                 //this.sprite.scale = 1;
                 this.alpha = 1;
@@ -48,10 +48,13 @@ define(["require", "exports", "./place.js"], function (require, exports, place_j
                 this.emit("click");
                 place.showMenu();
             }.bind(_this));
-            //this.addChild(this.animation);
-            _this.addChild(_this.sprite);
             return _this;
+            //this.addChild(this.sprite);
         }
+        preview.prototype.animationlogo = function () {
+            TweenMax.fromTo(this.sprite, 0.5, { x: 0, y: 0 }, { x: 0.9, y: 0.9 });
+            this.addChild(this.sprite);
+        };
         return preview;
     }(Container));
     exports.preview = preview;

@@ -87,4 +87,4 @@ define(["require", "exports", "./place.js"], function (require, exports, place_j
         app.stage.addChild(place);
     }
 });
-//# sourceMappingURL=main.js.map
+//# sourceMappingURL=Main.js.map

@@ -3,7 +3,8 @@ import Sprite = PIXI.Sprite;
 import Container = PIXI.Container;
 import Texture = PIXI.Texture;
 import { Place } from "./place.js";
-import { TweenLite } from "gsap";
+declare let TweenMax: any;
+declare let TimelineMax: any;
 export class preview extends Container{
     private sprite: Sprite;
     private timer = [50, 2000, 3000,100, 70];
@@ -19,7 +20,7 @@ constructor(place: Place){
     this.sprite.position.x = Place.size / 2 - Place.res.logo.texture.width/2;
     this.sprite.position.y = Place.size / 2 - Place.res.logo.texture.height / 2;
     this.alpha = 0.9;
-    //this.animation = TweenLite.to(this.sprite, 1, {scale: 1});
+    this.animationlogo (this.sprite);
 
     this.sprite.on("mouseover", function (): void {
         //this.sprite.scale = 1;
@@ -39,7 +40,9 @@ constructor(place: Place){
         this.emit("click");
         place.showMenu();
     }.bind(this));
-    //this.addChild(this.animation);
     this.addChild(this.sprite);
+}
+public animationlogo(use: any){
+    TweenMax.fromTo(use.scale, 0.5, { x: 0, y: 0 }, { x: 0.9, y: 0.9 });
 }
 }

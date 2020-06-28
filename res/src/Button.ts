@@ -370,7 +370,7 @@ export class pausebutton extends Container {
     constructor(place: Place) {
         super();
         this.pausegame = new Sprite();
-        this.pausegame.position.set(1024 / 2, 1024 * 0.1);
+        this.pausegame.position.set(1024 / 2, 1024 * 0.12);
         this.pausegame.scale.set(0.5);
         this.pausegame.anchor.set(0.5);
         this.pausegame.interactive = true;

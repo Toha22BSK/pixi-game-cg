@@ -21,9 +21,7 @@ export class ball extends Container {
     constructor(type: number){
         super();
         this.balls = new Sprite();
-      // this.balls.position.set(35);
         this.balls.anchor.set(0.5);
-        this.balls.scale.set(0.6);
         this.setType(type);
         this.addChild(this.balls);
     }

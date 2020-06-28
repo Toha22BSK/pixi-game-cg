@@ -30,9 +30,7 @@ define(["require", "exports", "./place.js"], function (require, exports, place_j
                 place_js_1.Place.res.lightblueball.texture
             ];
             _this.balls = new Sprite();
-            // this.balls.position.set(35);
             _this.balls.anchor.set(0.5);
-            _this.balls.scale.set(0.6);
             _this.setType(type);
             _this.addChild(_this.balls);
             return _this;

@@ -368,7 +368,7 @@ define(["require", "exports", "./place.js"], function (require, exports, place_j
             _this.pausebutton = place_js_1.Place.res.pausebutton.texture;
             _this.pausebuttonpress = place_js_1.Place.res.pausebuttonpress.texture;
             _this.pausegame = new Sprite();
-            _this.pausegame.position.set(1024 / 2, 1024 * 0.1);
+            _this.pausegame.position.set(1024 / 2, 1024 * 0.12);
             _this.pausegame.scale.set(0.5);
             _this.pausegame.anchor.set(0.5);
             _this.pausegame.interactive = true;

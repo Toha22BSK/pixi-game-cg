@@ -23,17 +23,17 @@ define(["require", "exports", "./Balls.js", "./place.js", "./Button.js"], functi
         __extends(gamefield, _super);
         function gamefield(sizesquare, time) {
             var _this = _super.call(this) || this;
-            _this.fieldsize = 1024 * 0.4;
+            _this.fieldsize = 1024 * 0.1;
             _this.scoretext = new Text("100000");
             _this.scoretext.anchor.set(0.5);
-            _this.scoretext.position.set(place_js_1.Place.size * 0.2, _this.fieldsize / 3.2);
+            _this.scoretext.position.set(place_js_1.Place.size * 0.2, _this.fieldsize * 1.18);
             _this.scoretext.style = new TextStyle({
                 fontSize: 72, fontFamily: "Calibri", fill: "#00fff0", align: "center", fontWeight: place_js_1.Place.res.score.texture.width,
                 dropShadow: false
             });
             _this.timetext = new Text("30:00");
             _this.timetext.anchor.set(0.5);
-            _this.timetext.position.set(place_js_1.Place.size * 0.8, _this.fieldsize / 3.2);
+            _this.timetext.position.set(place_js_1.Place.size * 0.8, _this.fieldsize * 1.18);
             _this.timetext.style = new TextStyle({
                 fontSize: 72, fontFamily: "Calibri", fill: "#00fff0", align: "center", fontWeight: place_js_1.Place.res.score.texture.width,
                 dropShadow: false
@@ -41,34 +41,34 @@ define(["require", "exports", "./Balls.js", "./place.js", "./Button.js"], functi
             _this.MusicgameButton = new Button_js_1.musicgamebutton();
             _this.SoundgameButton = new Button_js_1.soundgamebutton();
             _this.scorebackground = new Sprite(place_js_1.Place.res.score.texture);
-            _this.scorebackground.position.set(place_js_1.Place.size * 0.2, _this.fieldsize / 4);
+            _this.scorebackground.position.set(place_js_1.Place.size * 0.2, _this.fieldsize);
             _this.scorebackground.anchor.set(0.5);
             _this.scorebackground.scale.set(0.4);
             _this.timegamebackground = new Sprite(place_js_1.Place.res.timergame.texture);
-            _this.timegamebackground.position.set(place_js_1.Place.size * 0.8, _this.fieldsize / 4);
+            _this.timegamebackground.position.set(place_js_1.Place.size * 0.8, _this.fieldsize);
             _this.timegamebackground.anchor.set(0.5);
             _this.timegamebackground.scale.set(0.4);
             _this.sizefield = sizesquare;
-            _this.widthtexture = place_js_1.Place.res.redball.texture.width;
-            _this.heighttexture = place_js_1.Place.res.redball.texture.height;
             switch (_this.sizefield) {
                 case 8:
-                    _this.scaleball = 0.3;
+                    _this.scaleball = 0.8;
                     break;
                 case 12:
-                    _this.scaleball = 0.2;
+                    _this.scaleball = 0.5;
                     break;
                 case 16:
-                    _this.scaleball = 0.15;
+                    _this.scaleball = 0.4;
                     break;
             }
+            _this.widthtexture = place_js_1.Place.res.redball.texture.width * _this.scaleball;
+            _this.heighttexture = place_js_1.Place.res.redball.texture.height * _this.scaleball;
             _this.ballsfield = new Array(_this.sizefield);
             for (var i = 0; i < _this.sizefield; i++) {
                 _this.ballsfield[i] = new Array(_this.sizefield);
                 for (var j = 0; j < _this.sizefield; j++) {
                     var typetexture = Math.floor(Math.random() * 6);
                     _this.ballsfield[i][j] = new Balls_js_1.ball(typetexture);
-                    _this.ballsfield[i][j].position.set(_this.fieldsize + _this.widthtexture * (j + 1), _this.fieldsize * 1.5 + _this.heighttexture * (i + 1));
+                    _this.ballsfield[i][j].position.set(_this.fieldsize * 1.7 + _this.widthtexture * 1.2 * (j), _this.fieldsize * 2.7 + _this.heighttexture * 1.2 * (i));
                     _this.ballsfield[i][j].scale.set(_this.scaleball);
                     _this.addChild(_this.ballsfield[i][j]);
                 }
