@@ -72,7 +72,8 @@ export class gamefield extends Container {
         for (let i = 0; i < this.sizefield; i++) {
             this.ballsfield[i] = new Array<ball>(this.sizefield);
             for (let j = 0; j < this.sizefield; j++) {
-                this.ballsfield[i][j] = new ball();
+                let typetexture = Math.floor(Math.random() * 6);
+                this.ballsfield[i][j] = new ball(typetexture);
                 this.ballsfield[i][j].position.set(this.fieldsize + this.widthtexture * (j + 1), this.fieldsize * 1.5 + this.heighttexture * (i + 1));
                 this.ballsfield[i][j].scale.set(this.scaleball);
                 this.addChild(this.ballsfield[i][j]);

@@ -19,7 +19,7 @@ define(["require", "exports", "./place.js"], function (require, exports, place_j
     var Container = PIXI.Container;
     var ball = /** @class */ (function (_super) {
         __extends(ball, _super);
-        function ball() {
+        function ball(type) {
             var _this = _super.call(this) || this;
             _this.textureballs = [
                 place_js_1.Place.res.redball.texture,
@@ -30,12 +30,17 @@ define(["require", "exports", "./place.js"], function (require, exports, place_j
                 place_js_1.Place.res.lightblueball.texture
             ];
             _this.balls = new Sprite();
-            _this.balls.position.set(35);
+            // this.balls.position.set(35);
             _this.balls.anchor.set(0.5);
-            _this.balls.scale.set(1);
+            _this.balls.scale.set(0.6);
+            _this.setType(type);
             _this.addChild(_this.balls);
             return _this;
         }
+        ball.prototype.setType = function (t) {
+            this.typeball = t;
+            this.balls.texture = this.textureballs[this.typeball];
+        };
         return ball;
     }(Container));
     exports.ball = ball;

@@ -66,7 +66,8 @@ define(["require", "exports", "./Balls.js", "./place.js", "./Button.js"], functi
             for (var i = 0; i < _this.sizefield; i++) {
                 _this.ballsfield[i] = new Array(_this.sizefield);
                 for (var j = 0; j < _this.sizefield; j++) {
-                    _this.ballsfield[i][j] = new Balls_js_1.ball();
+                    var typetexture = Math.floor(Math.random() * 6);
+                    _this.ballsfield[i][j] = new Balls_js_1.ball(typetexture);
                     _this.ballsfield[i][j].position.set(_this.fieldsize + _this.widthtexture * (j + 1), _this.fieldsize * 1.5 + _this.heighttexture * (i + 1));
                     _this.ballsfield[i][j].scale.set(_this.scaleball);
                     _this.addChild(_this.ballsfield[i][j]);

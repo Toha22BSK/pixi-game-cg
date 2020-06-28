@@ -8,6 +8,7 @@ export class ball extends Container {
     private positionx: number;
     private positiony: number;
     private scaleballs: number;
+    private typeball: number;
     private textureballs: Texture[] = [
         Place.res.redball.texture,
         Place.res.blueball.texture,
@@ -17,13 +18,17 @@ export class ball extends Container {
         Place.res.lightblueball.texture
     ];
 
-    constructor(){
+    constructor(type: number){
         super();
         this.balls = new Sprite();
-       this.balls.position.set(35);
+      // this.balls.position.set(35);
         this.balls.anchor.set(0.5);
-        this.balls.scale.set(1);
-
+        this.balls.scale.set(0.6);
+        this.setType(type);
         this.addChild(this.balls);
+    }
+    public setType(t: number) {
+        this.typeball = t;
+        this.balls.texture = this.textureballs[this.typeball];
     }
 }
