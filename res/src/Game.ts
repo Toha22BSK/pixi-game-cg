@@ -5,8 +5,10 @@ import Texture = PIXI.Texture;
 import Text = PIXI.Text;
 import TextStyle = PIXI.TextStyle;
 import { ball } from "./Balls.js"
-import { Place } from "./place.js";
-import { pausebutton, musicgamebutton, soundgamebutton} from "./Button.js";
+import { Place } from "./Place.js";
+declare let TweenMax: any;
+declare let TimelineMax: any;
+import { musicgamebutton, soundgamebutton} from "./Button.js";
 export class gamefield extends Container {
 
     private MusicgameButton: musicgamebutton;
@@ -22,9 +24,10 @@ export class gamefield extends Container {
     private widthtexture: number;
     private heighttexture: number;
     private scaleball: number;
+    private background: Sprite[][];
     constructor(sizesquare: number, time: number) {
         super();
-
+        
         this.scoretext = new Text("100000");
         this.scoretext.anchor.set (0.5);
         this.scoretext.position.set(Place.size * 0.2, this.fieldsize*1.18);
@@ -57,30 +60,22 @@ export class gamefield extends Container {
         this.sizefield = sizesquare;
 
         switch (this.sizefield) {
+            case 6:
+                this.scaleball = 1;
+                this.fieldsize = this.fieldsize * 1.17;
+                break;
             case 8:
                 this.scaleball = 0.8;
                 break;
-            case 12:
-                this.scaleball = 0.5;
-                break;
-            case 16:
-                this.scaleball = 0.4;
+            case 10:
+                this.scaleball = 0.62;
                 break;
         }
         this.widthtexture = Place.res.redball.texture.width * this.scaleball;
         this.heighttexture = Place.res.redball.texture.height * this.scaleball;
-        this.ballsfield = new Array<ball[]>(this.sizefield);
-        for (let i = 0; i < this.sizefield; i++) {
-            this.ballsfield[i] = new Array<ball>(this.sizefield);
-            for (let j = 0; j < this.sizefield; j++) {
-                let typetexture = Math.floor(Math.random() * 6);
-                this.ballsfield[i][j] = new ball(typetexture);
-                this.ballsfield[i][j].position.set(this.fieldsize*1.7 + this.widthtexture * 1.2 * (j), this.fieldsize * 2.7 + this.heighttexture*1.2 * (i));
-                this.ballsfield[i][j].scale.set(this.scaleball);
-                this.addChild(this.ballsfield[i][j]);
-            }
+        this.drawball();
+        this.BackgroundBalls();
 
-        }
         this.addChild(this.MusicgameButton);
         this.addChild(this.SoundgameButton);
         this.addChild(this.scorebackground);
@@ -89,5 +84,35 @@ export class gamefield extends Container {
         this.addChild(this.timetext);
 
     }
-
+    public drawball (){
+        this.ballsfield = new Array<ball[]>(this.sizefield);
+        for (let i = 0; i < this.sizefield; i++) {
+            this.ballsfield[i] = new Array<ball>(this.sizefield);
+            for (let j = 0; j < this.sizefield; j++) {
+                let typetexture = Math.floor(Math.random() * 6);
+                this.ballsfield[i][j] = new ball(typetexture);
+                this.ballsfield[i][j].position.set(this.fieldsize * 1.7 + this.widthtexture * 1.2 * (j), this.fieldsize * 2.7 + this.heighttexture * 1.2 * (i));
+                this.ballsfield[i][j].scale.set(this.scaleball);
+                this.ScaleAnimation(this.ballsfield[i][j]);
+                this.addChild(this.ballsfield[i][j]);
+            }
+        }
+    }
+    public BackgroundBalls (){
+        this.background = new Array<[]>(this.sizefield);
+        for (let i = 0; i < this.sizefield; i++) {
+            this.background[i] = new Array(this.sizefield);
+            for (let j = 0; j < this.sizefield; j++) {
+                this.background[i][j] = new Sprite(Place.res.backgroundball.texture);
+                this.background[i][j].position.set(this.ballsfield[i][j].position.x, this.ballsfield[i][j].position.y);
+                this.background[i][j].anchor.set(0.5, 0.5);
+                this.background[i][j].scale.set(this.scaleball);
+                this.ScaleAnimation(this.background[i][j]);
+                this.addChild(this.background[i][j]);
+            }
+        }
+    }
+    public ScaleAnimation(use: any) {
+        TweenMax.fromTo(use.scale, 0.6, { x: 0, y: 0 }, { x: this.scaleball, y: this.scaleball });
+    }
 }

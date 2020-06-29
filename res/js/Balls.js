@@ -11,7 +11,7 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-define(["require", "exports", "./place.js"], function (require, exports, place_js_1) {
+define(["require", "exports", "./Place.js"], function (require, exports, Place_js_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.ball = void 0;
@@ -22,12 +22,12 @@ define(["require", "exports", "./place.js"], function (require, exports, place_j
         function ball(type) {
             var _this = _super.call(this) || this;
             _this.textureballs = [
-                place_js_1.Place.res.redball.texture,
-                place_js_1.Place.res.blueball.texture,
-                place_js_1.Place.res.greenball.texture,
-                place_js_1.Place.res.yellowball.texture,
-                place_js_1.Place.res.pinkball.texture,
-                place_js_1.Place.res.lightblueball.texture
+                Place_js_1.Place.res.redball.texture,
+                Place_js_1.Place.res.blueball.texture,
+                Place_js_1.Place.res.greenball.texture,
+                Place_js_1.Place.res.yellowball.texture,
+                Place_js_1.Place.res.pinkball.texture,
+                Place_js_1.Place.res.lightblueball.texture
             ];
             _this.balls = new Sprite();
             _this.balls.anchor.set(0.5);

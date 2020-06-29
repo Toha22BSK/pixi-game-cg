@@ -11,7 +11,7 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-define(["require", "exports", "./place.js"], function (require, exports, place_js_1) {
+define(["require", "exports", "./Place.js"], function (require, exports, Place_js_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.preview = void 0;
@@ -21,42 +21,33 @@ define(["require", "exports", "./place.js"], function (require, exports, place_j
         __extends(preview, _super);
         function preview(place) {
             var _this = _super.call(this) || this;
-            _this.timer = [50, 2000, 3000, 100, 70];
-            _this.alphalogo = [0.5, 0.9];
             _this.sprite = new Sprite();
             _this.sprite.interactive = true;
             _this.sprite.buttonMode = true;
-            _this.sprite.texture = place_js_1.Place.res.logo.texture;
-            _this.sprite.position.x = place_js_1.Place.size / 2 - place_js_1.Place.res.logo.texture.width / 2;
-            _this.sprite.position.y = place_js_1.Place.size / 2 - place_js_1.Place.res.logo.texture.height / 2;
+            _this.sprite.anchor.set(0.5, 0.5);
+            _this.sprite.texture = Place_js_1.Place.res.logo.texture;
+            _this.sprite.position.x = Place_js_1.Place.size / 2;
+            _this.sprite.position.y = Place_js_1.Place.size / 2;
             _this.alpha = 0.9;
-            _this.animationlogo();
+            _this.scalelogo(_this.sprite);
             _this.sprite.on("mouseover", function () {
-                //this.sprite.scale = 1;
                 this.alpha = 1;
             }.bind(_this));
             _this.sprite.on("mouseout", function () {
-                this.alpha = 0.9; /*
-                this.timerID = setInterval(function time() {
-                    if (this.alpha != 1)
-                        this.alpha = this.alphalogo[Math.floor(Math.random() * this.alphalogo.length)];
-                    else
-                        alert('stop');
-                }.bind(this), this.timer[Math.floor(Math.random() * this.timer.length)]);*/
+                this.alpha = 0.9;
             }.bind(_this));
             _this.sprite.on("mouseup", function () {
                 this.emit("click");
                 place.showMenu();
             }.bind(_this));
+            _this.addChild(_this.sprite);
             return _this;
-            //this.addChild(this.sprite);
         }
-        preview.prototype.animationlogo = function () {
-            TweenMax.fromTo(this.sprite, 0.5, { x: 0, y: 0 }, { x: 0.9, y: 0.9 });
-            this.addChild(this.sprite);
+        preview.prototype.scalelogo = function (use) {
+            TweenMax.fromTo(use.scale, 1, { x: 0, y: 0 }, { x: 1, y: 1 });
         };
         return preview;
     }(Container));
     exports.preview = preview;
 });
-//# sourceMappingURL=preview.js.map
+//# sourceMappingURL=Preview.js.map

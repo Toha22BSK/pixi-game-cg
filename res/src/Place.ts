@@ -2,9 +2,12 @@ import Application = PIXI.Application;
 import Sprite = PIXI.Sprite;
 import Container = PIXI.Container;
 import { logo, sound, places, time, music } from "./menugame.js";
-import { buttonplace, buttontime, soundbuttom, startbutton, playbutton, pausebutton} from "./Button.js";
-import { preview } from "./preview.js";
+import { buttonplace, buttontime, soundbuttom, startbutton, playbutton, pausebutton, OK} from "./Button.js";
+import { preview } from "./Preview.js";
 import { gamefield } from "./Game.js";
+import { erroroption } from "./Error.js"
+declare let TweenMax: any;
+declare let TimelineMax: any;
 
 export class Place extends Container {
     public static size: number = 1024;
@@ -24,12 +27,16 @@ export class Place extends Container {
     private GameField: gamefield;
     private PlayButton: playbutton;
     private PauseButton: pausebutton;
+    private ErrorOption: erroroption;
+    private OK: OK;
 
     constructor(resources: any) {
         super();
         Place.res = resources;
         this.PauseButton = new pausebutton(this);
         this.Logo = new logo();
+        this.OK = new OK(this);
+        this.ErrorOption = new erroroption();
         this.Sound = new sound();
         this.Places = new places();
         this.Time = new time();
@@ -84,5 +91,21 @@ export class Place extends Container {
         this.removeChild(this.backgroundPause);
         this.removeChild(this.PlayButton);
     }
+    public ShowError(){
+        this.ScaleHigh(this.ErrorOption);
+        this.ScaleHigh(this.OK);
+        this.addChild(this.ErrorOption);
+        this.addChild(this.OK);
+        
+    }
+    public CloseError() {
+        this.removeChild(this.ErrorOption);
+        this.removeChild(this.OK);
+    }
+    public ScaleHigh(use: any) {
+        TweenMax.fromTo(use.scale, 1, { x: 0, y: 0 }, { x: 1, y: 1 });
+    }
+
+
 
 }

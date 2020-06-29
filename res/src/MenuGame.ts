@@ -2,7 +2,7 @@ import Application = PIXI.Application;
 import Sprite = PIXI.Sprite;
 import Container = PIXI.Container;
 import Texture = PIXI.Texture;
-import { Place } from "./place.js";
+import { Place } from "./Place.js";
 let width: number = window.innerWidth;
 let height: number = window.innerHeight;
 

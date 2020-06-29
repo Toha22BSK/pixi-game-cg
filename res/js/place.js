@@ -11,7 +11,7 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-define(["require", "exports", "./menugame.js", "./Button.js", "./preview.js", "./Game.js"], function (require, exports, menugame_js_1, Button_js_1, preview_js_1, Game_js_1) {
+define(["require", "exports", "./menugame.js", "./Button.js", "./Preview.js", "./Game.js", "./Error.js"], function (require, exports, menugame_js_1, Button_js_1, Preview_js_1, Game_js_1, Error_js_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.Place = void 0;
@@ -24,10 +24,12 @@ define(["require", "exports", "./menugame.js", "./Button.js", "./preview.js", ".
             Place.res = resources;
             _this.PauseButton = new Button_js_1.pausebutton(_this);
             _this.Logo = new menugame_js_1.logo();
+            _this.OK = new Button_js_1.OK(_this);
+            _this.ErrorOption = new Error_js_1.erroroption();
             _this.Sound = new menugame_js_1.sound();
             _this.Places = new menugame_js_1.places();
             _this.Time = new menugame_js_1.time();
-            _this.Preview = new preview_js_1.preview(_this);
+            _this.Preview = new Preview_js_1.preview(_this);
             _this.Buttonplace = new Button_js_1.buttonplace();
             _this.Music = new menugame_js_1.music();
             _this.StartButton = new Button_js_1.startbutton(_this);
@@ -79,9 +81,22 @@ define(["require", "exports", "./menugame.js", "./Button.js", "./preview.js", ".
             this.removeChild(this.backgroundPause);
             this.removeChild(this.PlayButton);
         };
+        Place.prototype.ShowError = function () {
+            this.ScaleHigh(this.ErrorOption);
+            this.ScaleHigh(this.OK);
+            this.addChild(this.ErrorOption);
+            this.addChild(this.OK);
+        };
+        Place.prototype.CloseError = function () {
+            this.removeChild(this.ErrorOption);
+            this.removeChild(this.OK);
+        };
+        Place.prototype.ScaleHigh = function (use) {
+            TweenMax.fromTo(use.scale, 1, { x: 0, y: 0 }, { x: 1, y: 1 });
+        };
         Place.size = 1024;
         return Place;
     }(Container));
     exports.Place = Place;
 });
-//# sourceMappingURL=place.js.map
+//# sourceMappingURL=Place.js.map

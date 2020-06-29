@@ -2,47 +2,43 @@ import Application = PIXI.Application;
 import Sprite = PIXI.Sprite;
 import Container = PIXI.Container;
 import Texture = PIXI.Texture;
-import { Place } from "./place.js";
+import { Place } from "./Place.js";
 declare let TweenMax: any;
 declare let TimelineMax: any;
-export class preview extends Container{
+export class preview extends Container {
     private sprite: Sprite;
-    private timer = [50, 2000, 3000,100, 70];
-    private alphalogo = [0.5, 0.9];
-    private timerID: any; 
-    private animation: any;
-constructor(place: Place){
-    super();
-    this.sprite = new Sprite();
-    this.sprite.interactive = true;
-    this.sprite.buttonMode = true;
-    this.sprite.texture = Place.res.logo.texture;
-    this.sprite.position.x = Place.size / 2 - Place.res.logo.texture.width/2;
-    this.sprite.position.y = Place.size / 2 - Place.res.logo.texture.height / 2;
-    this.alpha = 0.9;
-    this.animationlogo (this.sprite);
 
-    this.sprite.on("mouseover", function (): void {
-        //this.sprite.scale = 1;
-        this.alpha = 1;
-    }.bind(this));
-    this.sprite.on("mouseout", function (): void {
-        this.alpha = 0.9;/*
-        this.timerID = setInterval(function time() {
-            if (this.alpha != 1)
-                this.alpha = this.alphalogo[Math.floor(Math.random() * this.alphalogo.length)];
-            else
-                alert('stop');
-        }.bind(this), this.timer[Math.floor(Math.random() * this.timer.length)]);*/
-    }.bind(this));
+    constructor(place: Place) {
+        super();
+        this.sprite = new Sprite();
+        this.sprite.interactive = true;
+        this.sprite.buttonMode = true;
+        this.sprite.anchor.set (0.5,0.5);
+        this.sprite.texture = Place.res.logo.texture;
+        this.sprite.position.x = Place.size / 2 ;
+        this.sprite.position.y = Place.size / 2 ;
+        this.alpha = 0.9;
+        this.scalelogo(this.sprite);
+        this.sprite.on("mouseover", function (): void {
 
-    this.sprite.on("mouseup", function (): void {
-        this.emit("click");
-        place.showMenu();
-    }.bind(this));
-    this.addChild(this.sprite);
-}
-public animationlogo(use: any){
-    TweenMax.fromTo(use.scale, 0.5, { x: 0, y: 0 }, { x: 0.9, y: 0.9 });
-}
+            this.alpha = 1;
+        }.bind(this));
+        this.sprite.on("mouseout", function (): void {
+            this.alpha = 0.9; 
+
+        }.bind(this));
+
+        this.sprite.on("mouseup", function (): void {
+            this.emit("click");
+            place.showMenu();
+        }.bind(this));
+        this.addChild(this.sprite);
+    }
+    public scalelogo(use: any) {
+        TweenMax.fromTo(use.scale, 1, { x: 0, y: 0 }, { x: 1, y: 1 });
+    }
+
+
+
+
 }

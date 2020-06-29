@@ -1,7 +1,7 @@
 import Sprite = PIXI.Sprite;
 import Container = PIXI.Container;
 import Texture = PIXI.Texture;
-import { Place } from "./place.js";
+import { Place } from "./Place.js";
 
 export class ball extends Container {
     private balls: Sprite;

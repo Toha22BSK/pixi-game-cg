@@ -11,55 +11,55 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-define(["require", "exports", "./place.js"], function (require, exports, place_js_1) {
+define(["require", "exports", "./Place.js"], function (require, exports, Place_js_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.playbutton = exports.pausebutton = exports.musicgamebutton = exports.soundgamebutton = exports.startbutton = exports.soundbuttom = exports.buttontime = exports.buttonplace = void 0;
+    exports.OK = exports.playbutton = exports.pausebutton = exports.musicgamebutton = exports.soundgamebutton = exports.startbutton = exports.soundbuttom = exports.buttontime = exports.buttonplace = void 0;
     var Sprite = PIXI.Sprite;
     var Container = PIXI.Container;
     var positionstockX = (1024 * 0.9) / 10;
     var positionstockY = 1024 / 10;
-    var timeforgame = 5;
-    var sizeField = 8;
-    var soundvalue = true;
-    var musicvalue = true;
+    var timeforgame = undefined;
+    var sizeField = undefined;
+    var soundvalue = undefined;
+    var musicvalue = undefined;
     var buttonplace = /** @class */ (function (_super) {
         __extends(buttonplace, _super);
         function buttonplace() {
             var _this = _super.call(this) || this;
-            _this.eightstock = place_js_1.Place.res.eightxeight.texture;
-            _this.eightpress = place_js_1.Place.res.eightxeightpress.texture;
-            _this.eightbring = place_js_1.Place.res.eightxeightbring.texture;
-            _this.twelvestock = place_js_1.Place.res.twelvextwelve.texture;
-            _this.twelvepress = place_js_1.Place.res.twelvextwelvepress.texture;
-            _this.twelvebring = place_js_1.Place.res.twelvextwelvebring.texture;
-            _this.sixteenstock = place_js_1.Place.res.sixteenxsixteen.texture;
-            _this.sixteenpress = place_js_1.Place.res.sixteenxsixteenpress.texture;
-            _this.sixteenbring = place_js_1.Place.res.sixteenxsixteenbring.texture;
+            _this.eightstock = Place_js_1.Place.res.eightxeight.texture;
+            _this.eightpress = Place_js_1.Place.res.eightxeightpress.texture;
+            _this.eightbring = Place_js_1.Place.res.eightxeightbring.texture;
+            _this.sixstock = Place_js_1.Place.res.sixxsix.texture;
+            _this.sixpress = Place_js_1.Place.res.sixxsixpress.texture;
+            _this.sixbring = Place_js_1.Place.res.sixxsixbring.texture;
+            _this.tenstock = Place_js_1.Place.res.tenxten.texture;
+            _this.tenpress = Place_js_1.Place.res.tenxtennpress.texture;
+            _this.tenbring = Place_js_1.Place.res.tenxtenbring.texture;
             _this.eightsprite = new Sprite();
-            _this.twelvesprite = new Sprite();
-            _this.sixteensprite = new Sprite();
+            _this.sixsprite = new Sprite();
+            _this.tensprite = new Sprite();
             _this.eightsprite.interactive = true;
             _this.eightsprite.buttonMode = true;
-            _this.twelvesprite.interactive = true;
-            _this.twelvesprite.buttonMode = true;
-            _this.sixteensprite.interactive = true;
-            _this.sixteensprite.buttonMode = true;
-            _this.eightsprite.position.set(positionstockX * 4, positionstockY * 4.95);
+            _this.sixsprite.interactive = true;
+            _this.sixsprite.buttonMode = true;
+            _this.tensprite.interactive = true;
+            _this.tensprite.buttonMode = true;
+            _this.sixsprite.position.set(positionstockX * 3.85, positionstockY * 4.95);
+            _this.sixsprite.scale.set(0.8, 0.8);
+            _this.eightsprite.position.set(positionstockX * 5.85, positionstockY * 4.85);
             _this.eightsprite.scale.set(0.8, 0.8);
-            _this.twelvesprite.position.set(positionstockX * 5.7, positionstockY * 4.85);
-            _this.twelvesprite.scale.set(0.8, 0.8);
-            _this.sixteensprite.position.set(positionstockX * 7.75, positionstockY * 4.7);
-            _this.sixteensprite.scale.set(0.8, 0.8);
-            _this.optionbuttom(_this.eightsprite, _this.twelvesprite, _this.sixteensprite, _this.eightpress, _this.eightbring, _this.eightstock, _this.twelvestock, _this.sixteenstock, 8);
-            _this.optionbuttom(_this.twelvesprite, _this.eightsprite, _this.sixteensprite, _this.twelvepress, _this.twelvebring, _this.twelvestock, _this.eightstock, _this.sixteenstock, 12);
-            _this.optionbuttom(_this.sixteensprite, _this.eightsprite, _this.twelvesprite, _this.sixteenpress, _this.sixteenbring, _this.sixteenstock, _this.eightstock, _this.twelvestock, 16);
+            _this.tensprite.position.set(positionstockX * 7.75, positionstockY * 4.7);
+            _this.tensprite.scale.set(0.8, 0.8);
+            _this.optionbuttom(_this.sixsprite, _this.eightsprite, _this.tensprite, _this.sixpress, _this.sixbring, _this.sixstock, _this.eightstock, _this.tenstock, 6);
+            _this.optionbuttom(_this.eightsprite, _this.sixsprite, _this.tensprite, _this.eightpress, _this.eightbring, _this.eightstock, _this.sixstock, _this.tenstock, 8);
+            _this.optionbuttom(_this.tensprite, _this.eightsprite, _this.sixsprite, _this.tenpress, _this.tenbring, _this.tenstock, _this.eightstock, _this.sixstock, 10);
             _this.eightsprite.texture = _this.eightstock;
-            _this.twelvesprite.texture = _this.twelvestock;
-            _this.sixteensprite.texture = _this.sixteenstock;
+            _this.sixsprite.texture = _this.sixstock;
+            _this.tensprite.texture = _this.tenstock;
             _this.addChild(_this.eightsprite);
-            _this.addChild(_this.twelvesprite);
-            _this.addChild(_this.sixteensprite);
+            _this.addChild(_this.sixsprite);
+            _this.addChild(_this.tensprite);
             return _this;
         }
         buttonplace.prototype.optionbuttom = function (use, use2, use3, press, bring, stock, stock2, stock3, value) {
@@ -87,18 +87,18 @@ define(["require", "exports", "./place.js"], function (require, exports, place_j
         __extends(buttontime, _super);
         function buttontime() {
             var _this = _super.call(this) || this;
-            _this.fivestock = place_js_1.Place.res.five.texture;
-            _this.fivepress = place_js_1.Place.res.fivepress.texture;
-            _this.fivebring = place_js_1.Place.res.fivebring.texture;
-            _this.tenstock = place_js_1.Place.res.ten.texture;
-            _this.tenpress = place_js_1.Place.res.tenpress.texture;
-            _this.tenbring = place_js_1.Place.res.tenbring.texture;
-            _this.fifteenstock = place_js_1.Place.res.fifteen.texture;
-            _this.fifteenpress = place_js_1.Place.res.fifteenpress.texture;
-            _this.fifteenbring = place_js_1.Place.res.fifteenbring.texture;
-            _this.thirtystock = place_js_1.Place.res.thirty.texture;
-            _this.thirtypress = place_js_1.Place.res.thirtypress.texture;
-            _this.thirtybring = place_js_1.Place.res.thirtybring.texture;
+            _this.fivestock = Place_js_1.Place.res.five.texture;
+            _this.fivepress = Place_js_1.Place.res.fivepress.texture;
+            _this.fivebring = Place_js_1.Place.res.fivebring.texture;
+            _this.tenstock = Place_js_1.Place.res.ten.texture;
+            _this.tenpress = Place_js_1.Place.res.tenpress.texture;
+            _this.tenbring = Place_js_1.Place.res.tenbring.texture;
+            _this.fifteenstock = Place_js_1.Place.res.fifteen.texture;
+            _this.fifteenpress = Place_js_1.Place.res.fifteenpress.texture;
+            _this.fifteenbring = Place_js_1.Place.res.fifteenbring.texture;
+            _this.thirtystock = Place_js_1.Place.res.thirty.texture;
+            _this.thirtypress = Place_js_1.Place.res.thirtypress.texture;
+            _this.thirtybring = Place_js_1.Place.res.thirtybring.texture;
             _this.fivesprite = new Sprite();
             _this.tensprite = new Sprite();
             _this.fifteensprite = new Sprite();
@@ -159,12 +159,12 @@ define(["require", "exports", "./place.js"], function (require, exports, place_j
         __extends(soundbuttom, _super);
         function soundbuttom() {
             var _this = _super.call(this) || this;
-            _this.onstock = place_js_1.Place.res.on.texture;
-            _this.onbring = place_js_1.Place.res.onbring.texture;
-            _this.onpress = place_js_1.Place.res.onpress.texture;
-            _this.offstock = place_js_1.Place.res.off.texture;
-            _this.offbring = place_js_1.Place.res.offbring.texture;
-            _this.offpress = place_js_1.Place.res.offpress.texture;
+            _this.onstock = Place_js_1.Place.res.on.texture;
+            _this.onbring = Place_js_1.Place.res.onbring.texture;
+            _this.onpress = Place_js_1.Place.res.onpress.texture;
+            _this.offstock = Place_js_1.Place.res.off.texture;
+            _this.offbring = Place_js_1.Place.res.offbring.texture;
+            _this.offpress = Place_js_1.Place.res.offpress.texture;
             _this.onsoundsprite = new Sprite();
             _this.onmusicsprite = new Sprite();
             _this.offsoundsprite = new Sprite();
@@ -228,9 +228,9 @@ define(["require", "exports", "./place.js"], function (require, exports, place_j
         __extends(startbutton, _super);
         function startbutton(place) {
             var _this = _super.call(this) || this;
-            _this.startstock = place_js_1.Place.res.start.texture;
-            _this.startbring = place_js_1.Place.res.startbring.texture;
-            _this.startpress = place_js_1.Place.res.startpress.texture;
+            _this.startstock = Place_js_1.Place.res.start.texture;
+            _this.startbring = Place_js_1.Place.res.startbring.texture;
+            _this.startpress = Place_js_1.Place.res.startpress.texture;
             _this.startsprite = new Sprite();
             _this.startsprite.interactive = true;
             _this.startsprite.buttonMode = true;
@@ -250,7 +250,15 @@ define(["require", "exports", "./place.js"], function (require, exports, place_j
             _this.startsprite.on("mouseup", function () {
                 this.startsprite.texture = this.startpress;
                 this.emit("click");
-                place.showGameField(sizeField, timeforgame);
+                setTimeout(function () {
+                    this.startsprite.texture = this.startstock;
+                    if (musicvalue == undefined || sizeField == undefined || soundvalue == undefined || timeforgame == undefined) {
+                        place.ShowError();
+                    }
+                    else {
+                        place.showGameField(sizeField, timeforgame);
+                    }
+                }.bind(this), 200);
             }.bind(_this));
             _this.startsprite.texture = _this.startstock;
             _this.addChild(_this.startsprite);
@@ -263,11 +271,11 @@ define(["require", "exports", "./place.js"], function (require, exports, place_j
         __extends(soundgamebutton, _super);
         function soundgamebutton() {
             var _this = _super.call(this) || this;
-            _this.soundbuttonon = place_js_1.Place.res.soundbuttonon.texture;
-            _this.soundbuttonoff = place_js_1.Place.res.soundbuttonoff.texture;
+            _this.soundbuttonon = Place_js_1.Place.res.soundbuttonon.texture;
+            _this.soundbuttonoff = Place_js_1.Place.res.soundbuttonoff.texture;
             _this.soundforgame = new Sprite();
             _this.soundforgame.position.set(1024 * 0.95, 1024 * 0.25);
-            _this.soundforgame.scale.set(0.1);
+            _this.soundforgame.scale.set(0.5);
             _this.soundforgame.anchor.set(0.5);
             _this.soundforgame.interactive = true;
             _this.soundforgame.buttonMode = true;
@@ -314,11 +322,11 @@ define(["require", "exports", "./place.js"], function (require, exports, place_j
         __extends(musicgamebutton, _super);
         function musicgamebutton() {
             var _this = _super.call(this) || this;
-            _this.musicbuttonon = place_js_1.Place.res.musicbuttonon.texture;
-            _this.musicbuttonoff = place_js_1.Place.res.musicbuttonoff.texture;
+            _this.musicbuttonon = Place_js_1.Place.res.musicbuttonon.texture;
+            _this.musicbuttonoff = Place_js_1.Place.res.musicbuttonoff.texture;
             _this.musicforgame = new Sprite();
             _this.musicforgame.position.set(1024 * 0.05, 1024 * 0.25);
-            _this.musicforgame.scale.set(0.05);
+            _this.musicforgame.scale.set(0.5);
             _this.musicforgame.anchor.set(0.5);
             _this.musicforgame.interactive = true;
             _this.musicforgame.buttonMode = true;
@@ -365,8 +373,8 @@ define(["require", "exports", "./place.js"], function (require, exports, place_j
         __extends(pausebutton, _super);
         function pausebutton(place) {
             var _this = _super.call(this) || this;
-            _this.pausebutton = place_js_1.Place.res.pausebutton.texture;
-            _this.pausebuttonpress = place_js_1.Place.res.pausebuttonpress.texture;
+            _this.pausebutton = Place_js_1.Place.res.pausebutton.texture;
+            _this.pausebuttonpress = Place_js_1.Place.res.pausebuttonpress.texture;
             _this.pausegame = new Sprite();
             _this.pausegame.position.set(1024 / 2, 1024 * 0.12);
             _this.pausegame.scale.set(0.5);
@@ -398,8 +406,8 @@ define(["require", "exports", "./place.js"], function (require, exports, place_j
         __extends(playbutton, _super);
         function playbutton(place) {
             var _this = _super.call(this) || this;
-            _this.playbutton = place_js_1.Place.res.playbutton.texture;
-            _this.playbuttonpress = place_js_1.Place.res.playbuttonpress.texture;
+            _this.playbutton = Place_js_1.Place.res.playbutton.texture;
+            _this.playbuttonpress = Place_js_1.Place.res.playbuttonpress.texture;
             _this.playgame = new Sprite();
             _this.playgame.position.set(1024 / 2, 1024 / 2);
             _this.playgame.anchor.set(0.5);
@@ -427,5 +435,38 @@ define(["require", "exports", "./place.js"], function (require, exports, place_j
         return playbutton;
     }(Container));
     exports.playbutton = playbutton;
+    var OK = /** @class */ (function (_super) {
+        __extends(OK, _super);
+        function OK(place) {
+            var _this = _super.call(this) || this;
+            _this.OKbutton = Place_js_1.Place.res.OK.texture;
+            _this.OKbuttonpress = Place_js_1.Place.res.OKpress.texture;
+            _this.OK = new Sprite();
+            _this.OK.position.set(1024 / 2, 1024 * 0.6);
+            _this.OK.anchor.set(0.5);
+            _this.OK.scale.set(0.4);
+            _this.OK.interactive = true;
+            _this.OK.buttonMode = true;
+            _this.OK.on("mouseover", function () {
+                this.OK.texture = this.OKbuttonpress;
+            }.bind(_this));
+            _this.OK.on("mouseout", function () {
+                this.OK.texture = this.OKbutton;
+            }.bind(_this));
+            _this.OK.on("mouseup", function () {
+                this.OK.texture = this.OKbuttonpress;
+                this.emit("click");
+                setTimeout(function () {
+                    this.OK.texture = this.OKbutton;
+                    place.CloseError();
+                }.bind(this), 200);
+            }.bind(_this));
+            _this.OK.texture = _this.OKbutton;
+            _this.addChild(_this.OK);
+            return _this;
+        }
+        return OK;
+    }(Container));
+    exports.OK = OK;
 });
 //# sourceMappingURL=Button.js.map

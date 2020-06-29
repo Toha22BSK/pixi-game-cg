@@ -11,7 +11,7 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-define(["require", "exports", "./place.js"], function (require, exports, place_js_1) {
+define(["require", "exports", "./Place.js"], function (require, exports, Place_js_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.music = exports.time = exports.places = exports.sound = exports.logo = void 0;
@@ -23,7 +23,7 @@ define(["require", "exports", "./place.js"], function (require, exports, place_j
         __extends(logo, _super);
         function logo() {
             var _this = _super.call(this) || this;
-            _this.sprite = new Sprite(place_js_1.Place.res.logo.texture);
+            _this.sprite = new Sprite(Place_js_1.Place.res.logo.texture);
             _this.sprite.position.set(512 - _this.sprite.width / 2, 0);
             _this.addChild(_this.sprite);
             return _this;
@@ -35,7 +35,7 @@ define(["require", "exports", "./place.js"], function (require, exports, place_j
         __extends(sound, _super);
         function sound() {
             var _this = _super.call(this) || this;
-            _this.sprite = new Sprite(place_js_1.Place.res.sound.texture);
+            _this.sprite = new Sprite(Place_js_1.Place.res.sound.texture);
             _this.sprite.position.set(1024 * 0.1, 1024 / 10 * 6.15);
             _this.sprite.scale.set(0.8, 0.8);
             _this.addChild(_this.sprite);
@@ -48,7 +48,7 @@ define(["require", "exports", "./place.js"], function (require, exports, place_j
         __extends(places, _super);
         function places() {
             var _this = _super.call(this) || this;
-            _this.sprite = new Sprite(place_js_1.Place.res.places.texture);
+            _this.sprite = new Sprite(Place_js_1.Place.res.places.texture);
             _this.sprite.position.set(1024 * 0.1, 1024 / 10 * 5.15);
             _this.sprite.scale.set(0.8, 0.8);
             _this.addChild(_this.sprite);
@@ -61,7 +61,7 @@ define(["require", "exports", "./place.js"], function (require, exports, place_j
         __extends(time, _super);
         function time() {
             var _this = _super.call(this) || this;
-            _this.sprite = new Sprite(place_js_1.Place.res.time.texture);
+            _this.sprite = new Sprite(Place_js_1.Place.res.time.texture);
             _this.sprite.position.set(1024 * 0.1, 1024 / 10 * 4.15);
             _this.sprite.scale.set(0.8, 0.8);
             _this.addChild(_this.sprite);
@@ -74,7 +74,7 @@ define(["require", "exports", "./place.js"], function (require, exports, place_j
         __extends(music, _super);
         function music() {
             var _this = _super.call(this) || this;
-            _this.sprite = new Sprite(place_js_1.Place.res.music.texture);
+            _this.sprite = new Sprite(Place_js_1.Place.res.music.texture);
             _this.sprite.position.set(1024 * 0.1, 1024 / 10 * 3);
             _this.sprite.scale.set(0.8, 0.8);
             _this.addChild(_this.sprite);

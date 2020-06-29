@@ -1,4 +1,4 @@
-define(["require", "exports", "./place.js"], function (require, exports, place_js_1) {
+define(["require", "exports", "./Place.js"], function (require, exports, Place_js_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var Application = PIXI.Application;
@@ -6,11 +6,11 @@ define(["require", "exports", "./place.js"], function (require, exports, place_j
     var loader = new Loader();
     var width = window.innerWidth;
     var height = window.innerHeight;
-    var size = place_js_1.Place.size;
+    var size = Place_js_1.Place.size;
     var scale = Math.min(width / size, height / size);
     var positionx = (width - size * scale) / 2;
     var positiony = (height - size * scale) / 2;
-    loader.add("background", "/res/media/pictures/background.png");
+    loader.add("background", "/res/media/pictures/background2.png");
     loader.add("redball", "res/media/pictures/red.png");
     loader.add("blueball", "res/media/pictures/blue.png");
     loader.add("greenball", "res/media/pictures/green.png");
@@ -38,12 +38,12 @@ define(["require", "exports", "./place.js"], function (require, exports, place_j
     loader.add("eightxeight", "res/media/pictures/8x8.png");
     loader.add("eightxeightbring", "res/media/pictures/8x8bring.png");
     loader.add("eightxeightpress", "res/media/pictures/8x8press.png");
-    loader.add("twelvextwelve", "res/media/pictures/12x12.png");
-    loader.add("twelvextwelvebring", "res/media/pictures/12x12bring.png");
-    loader.add("twelvextwelvepress", "res/media/pictures/12x12press.png");
-    loader.add("sixteenxsixteen", "res/media/pictures/16x16.png");
-    loader.add("sixteenxsixteenbring", "res/media/pictures/16x16bring.png");
-    loader.add("sixteenxsixteenpress", "res/media/pictures/16x16press.png");
+    loader.add("sixxsix", "res/media/pictures/6x6.png");
+    loader.add("sixxsixbring", "res/media/pictures/6x6bring.png");
+    loader.add("sixxsixpress", "res/media/pictures/6x6press.png");
+    loader.add("tenxten", "res/media/pictures/10x10.png");
+    loader.add("tenxtenbring", "res/media/pictures/10x10bring.png");
+    loader.add("tenxtennpress", "res/media/pictures/10x10press.png");
     loader.add("soundbuttonon", "res/media/pictures/soundbuttonon.png");
     loader.add("soundbuttonoff", "res/media/pictures/soundbuttonoff.png");
     loader.add("musicbuttonon", "res/media/pictures/musicbuttonon.png");
@@ -63,9 +63,13 @@ define(["require", "exports", "./place.js"], function (require, exports, place_j
     loader.add("score", "res/media/pictures/score.png");
     loader.add("timergame", "res/media/pictures/timeforgame.png");
     loader.add("black", "res/media/pictures/black.png");
+    loader.add("backgroundball", "res/media/pictures/backgroundball.png");
+    loader.add("erroroption", "res/media/pictures/error.png");
+    loader.add("OK", "res/media/pictures/OK.png");
+    loader.add("OKpress", "res/media/pictures/OKpress.png");
     loader.load(setup);
     var app = new Application({
-        backgroundColor: 0x000012,
+        backgroundColor: 0x000000,
         antialias: true,
         transparent: false,
         resolution: 1
@@ -83,7 +87,7 @@ define(["require", "exports", "./place.js"], function (require, exports, place_j
     window.onresize = eventListenerResize;
     document.body.appendChild(app.view);
     function setup(loader, resources) {
-        var place = new place_js_1.Place(resources);
+        var place = new Place_js_1.Place(resources);
         app.stage.addChild(place);
     }
 });
