@@ -14,7 +14,7 @@ var __extends = (this && this.__extends) || (function () {
 define(["require", "exports", "./Place.js"], function (require, exports, Place_js_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.OK = exports.playbutton = exports.pausebutton = exports.musicgamebutton = exports.soundgamebutton = exports.startbutton = exports.soundbuttom = exports.buttontime = exports.buttonplace = void 0;
+    exports.ReDraw = exports.TheEnd = exports.backmenu = exports.restartgame = exports.OK = exports.playbutton = exports.pausebutton = exports.musicgamebutton = exports.soundgamebutton = exports.startbutton = exports.soundbuttom = exports.buttontime = exports.buttonplace = void 0;
     var Sprite = PIXI.Sprite;
     var Container = PIXI.Container;
     var positionstockX = (1024 * 0.9) / 10;
@@ -23,6 +23,7 @@ define(["require", "exports", "./Place.js"], function (require, exports, Place_j
     var sizeField = undefined;
     var soundvalue = undefined;
     var musicvalue = undefined;
+    var statusstart = false;
     var buttonplace = /** @class */ (function (_super) {
         __extends(buttonplace, _super);
         function buttonplace() {
@@ -54,9 +55,7 @@ define(["require", "exports", "./Place.js"], function (require, exports, Place_j
             _this.optionbuttom(_this.sixsprite, _this.eightsprite, _this.tensprite, _this.sixpress, _this.sixbring, _this.sixstock, _this.eightstock, _this.tenstock, 6);
             _this.optionbuttom(_this.eightsprite, _this.sixsprite, _this.tensprite, _this.eightpress, _this.eightbring, _this.eightstock, _this.sixstock, _this.tenstock, 8);
             _this.optionbuttom(_this.tensprite, _this.eightsprite, _this.sixsprite, _this.tenpress, _this.tenbring, _this.tenstock, _this.eightstock, _this.sixstock, 10);
-            _this.eightsprite.texture = _this.eightstock;
-            _this.sixsprite.texture = _this.sixstock;
-            _this.tensprite.texture = _this.tenstock;
+            _this.refreshbuttonplace();
             _this.addChild(_this.eightsprite);
             _this.addChild(_this.sixsprite);
             _this.addChild(_this.tensprite);
@@ -78,7 +77,16 @@ define(["require", "exports", "./Place.js"], function (require, exports, Place_j
                 use2.texture = stock2;
                 use3.texture = stock3;
                 sizeField = value;
+                setInterval(function () {
+                    if (statusstart == true)
+                        this.refreshbuttonplace();
+                }.bind(this), 1000);
             }.bind(this));
+        };
+        buttonplace.prototype.refreshbuttonplace = function () {
+            this.eightsprite.texture = this.eightstock;
+            this.sixsprite.texture = this.sixstock;
+            this.tensprite.texture = this.tenstock;
         };
         return buttonplace;
     }(Container));
@@ -119,14 +127,11 @@ define(["require", "exports", "./Place.js"], function (require, exports, Place_j
             _this.fifteensprite.scale.set(0.8, 0.8);
             _this.thirtysprite.position.set(positionstockX * 8.5, positionstockY * 3.6);
             _this.thirtysprite.scale.set(0.8, 0.8);
-            _this.optionbuttom(_this.fivesprite, _this.tensprite, _this.fifteensprite, _this.thirtysprite, _this.fivepress, _this.fivebring, _this.fivestock, _this.tenstock, _this.fifteenstock, _this.thirtystock, 5);
-            _this.optionbuttom(_this.tensprite, _this.fivesprite, _this.fifteensprite, _this.thirtysprite, _this.tenpress, _this.tenbring, _this.tenstock, _this.fivestock, _this.fifteenstock, _this.thirtystock, 10);
-            _this.optionbuttom(_this.fifteensprite, _this.tensprite, _this.fivesprite, _this.thirtysprite, _this.fifteenpress, _this.fifteenbring, _this.fifteenstock, _this.tenstock, _this.fivestock, _this.thirtystock, 15);
-            _this.optionbuttom(_this.thirtysprite, _this.tensprite, _this.fifteensprite, _this.fivesprite, _this.thirtypress, _this.thirtybring, _this.thirtystock, _this.tenstock, _this.fifteenstock, _this.fivestock, 30);
-            _this.fivesprite.texture = _this.fivestock;
-            _this.tensprite.texture = _this.tenstock;
-            _this.fifteensprite.texture = _this.fifteenstock;
-            _this.thirtysprite.texture = _this.thirtystock;
+            _this.optionbuttom(_this.fivesprite, _this.tensprite, _this.fifteensprite, _this.thirtysprite, _this.fivepress, _this.fivebring, _this.fivestock, _this.tenstock, _this.fifteenstock, _this.thirtystock, 5 * 60);
+            _this.optionbuttom(_this.tensprite, _this.fivesprite, _this.fifteensprite, _this.thirtysprite, _this.tenpress, _this.tenbring, _this.tenstock, _this.fivestock, _this.fifteenstock, _this.thirtystock, 10 * 60);
+            _this.optionbuttom(_this.fifteensprite, _this.tensprite, _this.fivesprite, _this.thirtysprite, _this.fifteenpress, _this.fifteenbring, _this.fifteenstock, _this.tenstock, _this.fivestock, _this.thirtystock, 15 * 60);
+            _this.optionbuttom(_this.thirtysprite, _this.tensprite, _this.fifteensprite, _this.fivesprite, _this.thirtypress, _this.thirtybring, _this.thirtystock, _this.tenstock, _this.fifteenstock, _this.fivestock, 30 * 60);
+            _this.refreshbuttontime();
             _this.addChild(_this.fivesprite);
             _this.addChild(_this.tensprite);
             _this.addChild(_this.fifteensprite);
@@ -150,7 +155,17 @@ define(["require", "exports", "./Place.js"], function (require, exports, Place_j
                 use3.texture = stock3;
                 use4.texture = stock4;
                 timeforgame = value;
+                setInterval(function () {
+                    if (statusstart == true)
+                        this.refreshbuttontime();
+                }.bind(this), 1000);
             }.bind(this));
+        };
+        buttontime.prototype.refreshbuttontime = function () {
+            this.fivesprite.texture = this.fivestock;
+            this.tensprite.texture = this.tenstock;
+            this.fifteensprite.texture = this.fifteenstock;
+            this.thirtysprite.texture = this.thirtystock;
         };
         return buttontime;
     }(Container));
@@ -189,10 +204,7 @@ define(["require", "exports", "./Place.js"], function (require, exports, Place_j
             _this.optionbuttom(_this.offmusicsprite, _this.onmusicsprite, _this.offpress, _this.offbring, _this.offstock, _this.onstock, false, 0);
             _this.optionbuttom(_this.onsoundsprite, _this.offsoundsprite, _this.onpress, _this.onbring, _this.onstock, _this.offstock, true, 1);
             _this.optionbuttom(_this.offsoundsprite, _this.onsoundsprite, _this.offpress, _this.offbring, _this.offstock, _this.onstock, false, 1);
-            _this.onsoundsprite.texture = _this.onstock;
-            _this.onmusicsprite.texture = _this.onstock;
-            _this.offsoundsprite.texture = _this.offstock;
-            _this.offmusicsprite.texture = _this.offstock;
+            _this.refreshbuttonsound();
             _this.addChild(_this.onsoundsprite);
             _this.addChild(_this.onmusicsprite);
             _this.addChild(_this.offsoundsprite);
@@ -219,7 +231,17 @@ define(["require", "exports", "./Place.js"], function (require, exports, Place_j
                 else {
                     musicvalue = valuesound;
                 }
+                setInterval(function () {
+                    if (statusstart == true)
+                        this.refreshbuttonsound();
+                }.bind(this), 1000);
             }.bind(this));
+        };
+        soundbuttom.prototype.refreshbuttonsound = function () {
+            this.onsoundsprite.texture = this.onstock;
+            this.onmusicsprite.texture = this.onstock;
+            this.offsoundsprite.texture = this.offstock;
+            this.offmusicsprite.texture = this.offstock;
         };
         return soundbuttom;
     }(Container));
@@ -256,6 +278,7 @@ define(["require", "exports", "./Place.js"], function (require, exports, Place_j
                         place.ShowError();
                     }
                     else {
+                        statusstart = true;
                         place.showGameField(sizeField, timeforgame);
                     }
                 }.bind(this), 200);
@@ -371,7 +394,7 @@ define(["require", "exports", "./Place.js"], function (require, exports, Place_j
     exports.musicgamebutton = musicgamebutton;
     var pausebutton = /** @class */ (function (_super) {
         __extends(pausebutton, _super);
-        function pausebutton(place) {
+        function pausebutton(GmaeField) {
             var _this = _super.call(this) || this;
             _this.pausebutton = Place_js_1.Place.res.pausebutton.texture;
             _this.pausebuttonpress = Place_js_1.Place.res.pausebuttonpress.texture;
@@ -392,7 +415,7 @@ define(["require", "exports", "./Place.js"], function (require, exports, Place_j
                 this.emit("click");
                 setTimeout(function () {
                     this.pausegame.texture = this.pausebutton;
-                    place.PauseGame();
+                    GmaeField.PauseGame();
                 }.bind(this), 200);
             }.bind(_this));
             _this.pausegame.texture = _this.pausebutton;
@@ -404,14 +427,14 @@ define(["require", "exports", "./Place.js"], function (require, exports, Place_j
     exports.pausebutton = pausebutton;
     var playbutton = /** @class */ (function (_super) {
         __extends(playbutton, _super);
-        function playbutton(place) {
+        function playbutton(GmaeField) {
             var _this = _super.call(this) || this;
             _this.playbutton = Place_js_1.Place.res.playbutton.texture;
             _this.playbuttonpress = Place_js_1.Place.res.playbuttonpress.texture;
             _this.playgame = new Sprite();
             _this.playgame.position.set(1024 / 2, 1024 / 2);
             _this.playgame.anchor.set(0.5);
-            _this.playgame.scale.set(0.5);
+            _this.playgame.scale.set(0.8);
             _this.playgame.interactive = true;
             _this.playgame.buttonMode = true;
             _this.playgame.on("mouseover", function () {
@@ -425,7 +448,7 @@ define(["require", "exports", "./Place.js"], function (require, exports, Place_j
                 this.emit("click");
                 setTimeout(function () {
                     this.playgame.texture = this.playbutton;
-                    place.ResumeGame();
+                    GmaeField.ResumeGame();
                 }.bind(this), 200);
             }.bind(_this));
             _this.playgame.texture = _this.playbutton;
@@ -468,5 +491,157 @@ define(["require", "exports", "./Place.js"], function (require, exports, Place_j
         return OK;
     }(Container));
     exports.OK = OK;
+    var restartgame = /** @class */ (function (_super) {
+        __extends(restartgame, _super);
+        function restartgame(place) {
+            var _this = _super.call(this) || this;
+            _this.restartstock = Place_js_1.Place.res.restart.texture;
+            _this.restartbring = Place_js_1.Place.res.restartbring.texture;
+            _this.restartpress = Place_js_1.Place.res.restartpress.texture;
+            _this.backgroundrestart = new Sprite(Place_js_1.Place.res.BackgroundEndButtton.texture);
+            _this.backgroundrestart.position.set(Place_js_1.Place.size * 0.25, Place_js_1.Place.size * 0.73);
+            _this.backgroundrestart.anchor.set(0.5, 0.5);
+            _this.buttonrestart = new Sprite();
+            _this.buttonrestart.position.set(Place_js_1.Place.size * 0.25, Place_js_1.Place.size * 0.77);
+            _this.buttonrestart.anchor.set(0.5, 0.5);
+            _this.buttonrestart.interactive = true;
+            _this.buttonrestart.buttonMode = true;
+            _this.buttonrestart.on("mouseover", function () {
+                this.buttonrestart.texture = this.restartbring;
+            }.bind(_this));
+            _this.buttonrestart.on("mouseout", function () {
+                this.buttonrestart.texture = this.restartstock;
+            }.bind(_this));
+            _this.buttonrestart.on("mouseup", function () {
+                this.buttonrestart.texture = this.restartpress;
+                this.emit("click");
+                setTimeout(function () {
+                    this.buttonrestart.texture = this.restartstock;
+                    place.restartgamefield(sizeField, timeforgame);
+                }.bind(this), 200);
+            }.bind(_this));
+            _this.buttonrestart.texture = _this.restartstock;
+            _this.addChild(_this.backgroundrestart);
+            _this.addChild(_this.buttonrestart);
+            return _this;
+        }
+        return restartgame;
+    }(Container));
+    exports.restartgame = restartgame;
+    var backmenu = /** @class */ (function (_super) {
+        __extends(backmenu, _super);
+        function backmenu(use, use2, use3, use4, positionX, positionY, positionY2, scale1, scale2, place) {
+            var _this = _super.call(this) || this;
+            _this.backmenustock = use2;
+            _this.backmenubring = use3;
+            _this.backmenupress = use4;
+            _this.backgroundbackmenu = new Sprite(use);
+            _this.backgroundbackmenu.position.set(positionX, positionY);
+            _this.backgroundbackmenu.anchor.set(0.5, 0.5);
+            _this.backgroundbackmenu.scale.set(scale1, scale1);
+            _this.buttonbackmenu = new Sprite();
+            _this.buttonbackmenu.position.set(positionX, positionY2);
+            _this.buttonbackmenu.anchor.set(0.5, 0.5);
+            _this.buttonbackmenu.scale.set(scale2, scale2);
+            _this.buttonbackmenu.interactive = true;
+            _this.buttonbackmenu.buttonMode = true;
+            _this.buttonbackmenu.on("mouseover", function () {
+                this.buttonbackmenu.texture = this.backmenubring;
+            }.bind(_this));
+            _this.buttonbackmenu.on("mouseout", function () {
+                this.buttonbackmenu.texture = this.backmenustock;
+            }.bind(_this));
+            _this.buttonbackmenu.on("mouseup", function () {
+                this.buttonbackmenu.texture = this.backmenupress;
+                this.emit("click");
+                setTimeout(function () {
+                    this.buttonbackmenu.texture = this.backmenustock;
+                    sizeField = undefined;
+                    timeforgame = undefined;
+                    statusstart = false;
+                    place.BackToMenu();
+                }.bind(this), 200);
+            }.bind(_this));
+            _this.buttonbackmenu.texture = _this.backmenustock;
+            _this.addChild(_this.backgroundbackmenu);
+            _this.addChild(_this.buttonbackmenu);
+            return _this;
+        }
+        return backmenu;
+    }(Container));
+    exports.backmenu = backmenu;
+    var TheEnd = /** @class */ (function (_super) {
+        __extends(TheEnd, _super);
+        function TheEnd(gameField, place) {
+            var _this = _super.call(this) || this;
+            _this.TheEndstock = Place_js_1.Place.res.theend.texture;
+            _this.TheEndpress = Place_js_1.Place.res.theendpress.texture;
+            _this.TheEndButon = new Sprite();
+            _this.TheEndButon.position.set(Place_js_1.Place.size / 2, Place_js_1.Place.size * 0.8);
+            _this.TheEndButon.anchor.set(0.5, 0.5);
+            _this.TheEndButon.scale.set(0.4);
+            _this.TheEndButon.interactive = true;
+            _this.TheEndButon.buttonMode = true;
+            _this.TheEndButon.on("mouseover", function () {
+                this.TheEndButon.texture = this.TheEndpress;
+            }.bind(_this));
+            _this.TheEndButon.on("mouseout", function () {
+                this.TheEndButon.texture = this.TheEndstock;
+            }.bind(_this));
+            _this.TheEndButon.on("mouseup", function () {
+                this.TheEndButon.texture = this.TheEndpress;
+                this.emit("click");
+                setTimeout(function () {
+                    this.TheEndButon.texture = this.TheEndstock;
+                    gameField.TheEndbButton();
+                    gameField.StartGameOver(place);
+                }.bind(this), 200);
+            }.bind(_this));
+            _this.TheEndButon.texture = _this.TheEndstock;
+            _this.addChild(_this.TheEndButon);
+            return _this;
+        }
+        return TheEnd;
+    }(Container));
+    exports.TheEnd = TheEnd;
+    var ReDraw = /** @class */ (function (_super) {
+        __extends(ReDraw, _super);
+        function ReDraw(gameField) {
+            var _this = _super.call(this) || this;
+            _this.redrawstock = Place_js_1.Place.res.redraw.texture;
+            _this.redrawbring = Place_js_1.Place.res.redrawbring.texture;
+            _this.redrawpress = Place_js_1.Place.res.redrawpress.texture;
+            _this.redrawbackground = new Sprite(Place_js_1.Place.res.backgroundbuttonfield.texture);
+            _this.redrawbackground.position.set(1024 * 0.95, 1024 * 0.9);
+            _this.redrawbackground.anchor.set(0.5, 0.5);
+            _this.redrawbackground.scale.set(0.32, 0.32);
+            _this.redrawButon = new Sprite();
+            _this.redrawButon.position.set(1024 * 0.953, 1024 * 0.895);
+            _this.redrawButon.anchor.set(0.5, 0.5);
+            _this.redrawButon.scale.set(0.3, 0.3);
+            _this.redrawButon.interactive = true;
+            _this.redrawButon.buttonMode = true;
+            _this.redrawButon.on("mouseover", function () {
+                this.redrawButon.texture = this.redrawbring;
+            }.bind(_this));
+            _this.redrawButon.on("mouseout", function () {
+                this.redrawButon.texture = this.redrawstock;
+            }.bind(_this));
+            _this.redrawButon.on("mouseup", function () {
+                this.redrawButon.texture = this.redrawpress;
+                this.emit("click");
+                setTimeout(function () {
+                    this.redrawButon.texture = this.redrawstock;
+                    gameField.redrawfield();
+                }.bind(this), 200);
+            }.bind(_this));
+            _this.redrawButon.texture = _this.redrawstock;
+            _this.addChild(_this.redrawbackground);
+            _this.addChild(_this.redrawButon);
+            return _this;
+        }
+        return ReDraw;
+    }(Container));
+    exports.ReDraw = ReDraw;
 });
 //# sourceMappingURL=Button.js.map

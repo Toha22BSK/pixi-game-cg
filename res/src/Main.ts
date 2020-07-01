@@ -68,6 +68,26 @@ loader.add("backgroundball", "res/media/pictures/backgroundball.png");
 loader.add("erroroption", "res/media/pictures/error.png");
 loader.add("OK", "res/media/pictures/OK.png");
 loader.add("OKpress", "res/media/pictures/OKpress.png");
+loader.add("BackgroundEndButtton", "res/media/pictures/BackgroundEndButtton.png");
+loader.add("restart", "res/media/pictures/restart.png");
+loader.add("menu", "res/media/pictures/menu.png");
+loader.add("restartbring", "res/media/pictures/restartbring.png");
+loader.add("menubring", "res/media/pictures/menubring.png");
+loader.add("restartpress", "res/media/pictures/restartpress.png");
+loader.add("menupress", "res/media/pictures/menupress.png");
+loader.add("GameOver", "res/media/pictures/GameOver.png");
+loader.add("theend", "res/media/pictures/TheEnd.png");
+loader.add("theendpress", "res/media/pictures/TheEndpress.png");
+loader.add("backgroundbuttonfield", "res/media/pictures/backgroundbuttongamefield.png");
+loader.add("MenuButton", "res/media/pictures/MenuButton.png");
+loader.add("MenuButtonbring", "res/media/pictures/MenuButtonbring.png");
+loader.add("MenuButtonpress", "res/media/pictures/MenuButtonpress.png");
+loader.add("redraw", "res/media/pictures/redraw.png")
+loader.add("redrawbring", "res/media/pictures/redrawbring.png")
+loader.add("redrawpress", "res/media/pictures/redrawpress.png")
+
+
+
 
 loader.load(setup);
 

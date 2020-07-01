@@ -11,77 +11,64 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-define(["require", "exports", "./Place.js"], function (require, exports, Place_js_1) {
+define(["require", "exports", "./Place.js", "./Button.js"], function (require, exports, Place_js_1, Button_js_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.music = exports.time = exports.places = exports.sound = exports.logo = void 0;
+    exports.menugame = void 0;
     var Sprite = PIXI.Sprite;
     var Container = PIXI.Container;
     var width = window.innerWidth;
     var height = window.innerHeight;
-    var logo = /** @class */ (function (_super) {
-        __extends(logo, _super);
-        function logo() {
+    var menugame = /** @class */ (function (_super) {
+        __extends(menugame, _super);
+        function menugame(place) {
             var _this = _super.call(this) || this;
-            _this.sprite = new Sprite(Place_js_1.Place.res.logo.texture);
-            _this.sprite.position.set(512 - _this.sprite.width / 2, 0);
-            _this.addChild(_this.sprite);
+            _this.Buttonplace = new Button_js_1.buttonplace();
+            _this.StartButton = new Button_js_1.startbutton(place);
+            _this.Buttonsound = new Button_js_1.soundbuttom();
+            _this.Buttontime = new Button_js_1.buttontime();
+            _this.addChild(_this.Buttonplace);
+            _this.addChild(_this.Buttontime);
+            _this.addChild(_this.Buttonsound);
+            _this.addChild(_this.StartButton);
+            _this.logo();
+            _this.sound();
+            _this.places();
+            _this.time();
+            _this.music();
             return _this;
         }
-        return logo;
+        menugame.prototype.logo = function () {
+            this.spritelogo = new Sprite(Place_js_1.Place.res.logo.texture);
+            this.spritelogo.position.set(512 - this.spritelogo.width / 2, 0);
+            this.addChild(this.spritelogo);
+        };
+        menugame.prototype.sound = function () {
+            this.spritesound = new Sprite(Place_js_1.Place.res.sound.texture);
+            this.spritesound.position.set(1024 * 0.1, 1024 / 10 * 6.15);
+            this.spritesound.scale.set(0.8, 0.8);
+            this.addChild(this.spritesound);
+        };
+        menugame.prototype.places = function () {
+            this.spriteplaces = new Sprite(Place_js_1.Place.res.places.texture);
+            this.spriteplaces.position.set(1024 * 0.1, 1024 / 10 * 5.15);
+            this.spriteplaces.scale.set(0.8, 0.8);
+            this.addChild(this.spriteplaces);
+        };
+        menugame.prototype.time = function () {
+            this.spritetime = new Sprite(Place_js_1.Place.res.time.texture);
+            this.spritetime.position.set(1024 * 0.1, 1024 / 10 * 4.15);
+            this.spritetime.scale.set(0.8, 0.8);
+            this.addChild(this.spritetime);
+        };
+        menugame.prototype.music = function () {
+            this.spritemusic = new Sprite(Place_js_1.Place.res.music.texture);
+            this.spritemusic.position.set(1024 * 0.1, 1024 / 10 * 3);
+            this.spritemusic.scale.set(0.8, 0.8);
+            this.addChild(this.spritemusic);
+        };
+        return menugame;
     }(Container));
-    exports.logo = logo;
-    var sound = /** @class */ (function (_super) {
-        __extends(sound, _super);
-        function sound() {
-            var _this = _super.call(this) || this;
-            _this.sprite = new Sprite(Place_js_1.Place.res.sound.texture);
-            _this.sprite.position.set(1024 * 0.1, 1024 / 10 * 6.15);
-            _this.sprite.scale.set(0.8, 0.8);
-            _this.addChild(_this.sprite);
-            return _this;
-        }
-        return sound;
-    }(Container));
-    exports.sound = sound;
-    var places = /** @class */ (function (_super) {
-        __extends(places, _super);
-        function places() {
-            var _this = _super.call(this) || this;
-            _this.sprite = new Sprite(Place_js_1.Place.res.places.texture);
-            _this.sprite.position.set(1024 * 0.1, 1024 / 10 * 5.15);
-            _this.sprite.scale.set(0.8, 0.8);
-            _this.addChild(_this.sprite);
-            return _this;
-        }
-        return places;
-    }(Container));
-    exports.places = places;
-    var time = /** @class */ (function (_super) {
-        __extends(time, _super);
-        function time() {
-            var _this = _super.call(this) || this;
-            _this.sprite = new Sprite(Place_js_1.Place.res.time.texture);
-            _this.sprite.position.set(1024 * 0.1, 1024 / 10 * 4.15);
-            _this.sprite.scale.set(0.8, 0.8);
-            _this.addChild(_this.sprite);
-            return _this;
-        }
-        return time;
-    }(Container));
-    exports.time = time;
-    var music = /** @class */ (function (_super) {
-        __extends(music, _super);
-        function music() {
-            var _this = _super.call(this) || this;
-            _this.sprite = new Sprite(Place_js_1.Place.res.music.texture);
-            _this.sprite.position.set(1024 * 0.1, 1024 / 10 * 3);
-            _this.sprite.scale.set(0.8, 0.8);
-            _this.addChild(_this.sprite);
-            return _this;
-        }
-        return music;
-    }(Container));
-    exports.music = music;
+    exports.menugame = menugame;
 });
-//# sourceMappingURL=menugame.js.map
+//# sourceMappingURL=MenuGame.js.map

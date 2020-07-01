@@ -6,17 +6,23 @@ import Text = PIXI.Text;
 import TextStyle = PIXI.TextStyle;
 import { ball } from "./Balls.js"
 import { Place } from "./Place.js";
+import { gameover } from "./GameOver.js";
 declare let TweenMax: any;
 declare let TimelineMax: any;
-import { musicgamebutton, soundgamebutton} from "./Button.js";
+import { musicgamebutton, soundgamebutton, playbutton, TheEnd, pausebutton, backmenu, ReDraw} from "./Button.js";
 export class gamefield extends Container {
 
     private MusicgameButton: musicgamebutton;
     private SoundgameButton: soundgamebutton;
     private sizefield: number;
-    private time: number;
+    private timergame: number;
+    private redraw: ReDraw;
+    private BackMenu: backmenu;
+    private theend: TheEnd;
+    private GameOver: gameover;
     protected scoretext: Text;
     protected timetext: Text;
+    private PlayButton: playbutton;
     private scorebackground: Sprite;
     private timegamebackground: Sprite;
     private ballsfield: ball[][];
@@ -24,11 +30,26 @@ export class gamefield extends Container {
     private widthtexture: number;
     private heighttexture: number;
     private scaleball: number;
+    private timerstart: any;
+    private ScoreGame: number;
+    private Readystatus: boolean = false;
+    private PauseButton: pausebutton;
+    private backgroundPause: Sprite;
     private background: Sprite[][];
-    constructor(sizesquare: number, time: number) {
+    private backbackground: Texture = Place.res.backgroundbuttonfield.texture;
+    private backstock: Texture = Place.res.MenuButton.texture;
+    private backbring: Texture = Place.res.MenuButtonbring.texture;
+    private backpress: Texture = Place.res.MenuButtonpress.texture;
+    constructor(sizesquare: number, time: number, place: Place) {
         super();
-        
-        this.scoretext = new Text("100000");
+        this.redraw = new ReDraw(this);
+        this.PauseButton = new pausebutton(this);
+        this.theend = new TheEnd(this, place);
+        this.BackMenu = new backmenu(this.backbackground, this.backstock, this.backbring, this.backpress, 1024 * 0.05, 1024 * 0.9, 1024 * 0.9, 0.32, 0.4, place);
+        this.timergame = time;
+        this.ScoreGame = 100000;
+        this.PlayButton = new playbutton(this);
+        this.scoretext = new Text(String(this.ScoreGame));
         this.scoretext.anchor.set (0.5);
         this.scoretext.position.set(Place.size * 0.2, this.fieldsize*1.18);
         this.scoretext.style = new TextStyle({
@@ -36,7 +57,7 @@ export class gamefield extends Container {
             dropShadow: false
         });
 
-        this.timetext = new Text("30:00");
+        this.timetext = new Text("--:--");
         this.timetext.anchor.set(0.5);
         this.timetext.position.set(Place.size * 0.8, this.fieldsize*1.18);
         this.timetext.style = new TextStyle({
@@ -76,12 +97,20 @@ export class gamefield extends Container {
         this.drawball();
         this.BackgroundBalls();
 
+
         this.addChild(this.MusicgameButton);
         this.addChild(this.SoundgameButton);
         this.addChild(this.scorebackground);
         this.addChild(this.timegamebackground);
         this.addChild(this.scoretext);
         this.addChild(this.timetext);
+        this.addChild(this.PauseButton);
+        this.addChild(this.redraw);
+        this.addChild(this.BackMenu);
+        this.TimerAnimation();
+        setTimeout(function (place: Place) {
+            this.StartGameOver(place);
+        }.bind(this), this.timergame * 1000);
 
     }
     public drawball (){
@@ -95,6 +124,14 @@ export class gamefield extends Container {
                 this.ballsfield[i][j].scale.set(this.scaleball);
                 this.ScaleAnimation(this.ballsfield[i][j]);
                 this.addChild(this.ballsfield[i][j]);
+            }
+        }
+    }
+    public deleteball (){
+        for (let i = 0; i < this.sizefield; i++) {
+            for (let j = 0; j < this.sizefield; j++) {
+                this.RemoveAnimation(this.ballsfield[i][j]);
+                this.removeChild(this.ballsfield[i][j]);
             }
         }
     }
@@ -115,4 +152,57 @@ export class gamefield extends Container {
     public ScaleAnimation(use: any) {
         TweenMax.fromTo(use.scale, 0.6, { x: 0, y: 0 }, { x: this.scaleball, y: this.scaleball });
     }
+    public RemoveAnimation(use: any) {
+        TweenMax.fromTo(use.scale, 0.6, { x: this.scaleball, y: this.scaleball }, { x: 0, y: 0 });
+       
+    }
+    public TimerText () {
+        let seconds = this.timergame % 60;
+        let minutes = (this.timergame - seconds) / 60;
+        let AddChar = function () { if (seconds<10) return "0"; else return"";};
+        this.timetext.text = String(minutes) + ":" + AddChar() + String(seconds);
+    }
+    public TickTimer(){
+        this.timergame-=1;
+        this.TimerText();
+    }
+    public TimerEnd(){
+        this.timergame = 0;
+        this.TimerText();
+
+    }
+    public TimerAnimation(){
+        this.TimerText();
+        this.timerstart = new TimelineMax({ repeat: this.timergame, repeatDelay: 1, onComplete: this.TimerEnd.bind(this), onRepeat: this.TickTimer.bind(this) });
+    }
+    public PauseGame(){
+        this.backgroundPause = new Sprite(Place.res.black.texture);
+        this.backgroundPause.width = Place.size;
+        this.backgroundPause.height = Place.size;
+        this.backgroundPause.alpha = 0.5;
+        this.timerstart.pause();
+        this.addChild(this.backgroundPause);
+        this.addChild(this.PlayButton);
+        this.addChild(this.theend);
+    }
+    public ResumeGame() {
+        this.removeChild(this.backgroundPause);
+        this.removeChild(this.PlayButton);
+        this.removeChild(this.theend);
+        this.timerstart.resume();
+    }
+    public TheEndbButton(){
+        this.removeChild(this.backgroundPause);
+        this.removeChild(this.PlayButton);
+        this.removeChild(this.theend);
+    }
+    public StartGameOver(place: Place){
+        this.GameOver = new gameover(this.ScoreGame, place);
+        this.addChild(this.GameOver);
+    }
+    public redrawfield(){
+        this.deleteball();
+        this.drawball();
+    }
+
 }
