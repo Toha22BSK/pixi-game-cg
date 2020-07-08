@@ -4,6 +4,7 @@ define(["require", "exports", "./Place.js"], function (require, exports, Place_j
     var Application = PIXI.Application;
     var Loader = PIXI.Loader;
     var loader = new Loader();
+    var soundgame = new Loader();
     var width = window.innerWidth;
     var height = window.innerHeight;
     var size = Place_js_1.Place.size;
@@ -81,9 +82,15 @@ define(["require", "exports", "./Place.js"], function (require, exports, Place_j
     loader.add("MenuButton", "res/media/pictures/MenuButton.png");
     loader.add("MenuButtonbring", "res/media/pictures/MenuButtonbring.png");
     loader.add("MenuButtonpress", "res/media/pictures/MenuButtonpress.png");
+    loader.add("pressball", "res/media/pictures/pressball.png");
     loader.add("redraw", "res/media/pictures/redraw.png");
     loader.add("redrawbring", "res/media/pictures/redrawbring.png");
     loader.add("redrawpress", "res/media/pictures/redrawpress.png");
+    loader.add("backgroundsound", "res/media/music/backgroundsound.mp3");
+    loader.add("click", "res/media/music/click.mp3");
+    loader.add("clickball", "res/media/music/clickball.wav");
+    loader.add("crushball", "res/media/music/crushbals.wav");
+    loader.add("false", "res/media/music/false.mp3");
     loader.load(setup);
     var app = new Application({
         backgroundColor: 0x000000,

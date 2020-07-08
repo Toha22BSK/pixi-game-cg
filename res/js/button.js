@@ -14,16 +14,17 @@ var __extends = (this && this.__extends) || (function () {
 define(["require", "exports", "./Place.js"], function (require, exports, Place_js_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.ReDraw = exports.TheEnd = exports.backmenu = exports.restartgame = exports.OK = exports.playbutton = exports.pausebutton = exports.musicgamebutton = exports.soundgamebutton = exports.startbutton = exports.soundbuttom = exports.buttontime = exports.buttonplace = void 0;
+    exports.ReDraw = exports.TheEnd = exports.backmenu = exports.restartgame = exports.playbutton = exports.pausebutton = exports.musicgamebutton = exports.soundgamebutton = exports.startbutton = exports.soundbuttom = exports.buttontime = exports.buttonplace = void 0;
     var Sprite = PIXI.Sprite;
     var Container = PIXI.Container;
     var positionstockX = (1024 * 0.9) / 10;
     var positionstockY = 1024 / 10;
-    var timeforgame = undefined;
-    var sizeField = undefined;
-    var soundvalue = undefined;
-    var musicvalue = undefined;
+    var timeforgame = 5 * 60;
+    var sizeField = 6;
+    var soundvalue = true;
+    var musicvalue = true;
     var statusstart = false;
+    var statuspause = false;
     var buttonplace = /** @class */ (function (_super) {
         __extends(buttonplace, _super);
         function buttonplace() {
@@ -77,6 +78,7 @@ define(["require", "exports", "./Place.js"], function (require, exports, Place_j
                 use2.texture = stock2;
                 use3.texture = stock3;
                 sizeField = value;
+                Click();
                 setInterval(function () {
                     if (statusstart == true)
                         this.refreshbuttonplace();
@@ -85,7 +87,7 @@ define(["require", "exports", "./Place.js"], function (require, exports, Place_j
         };
         buttonplace.prototype.refreshbuttonplace = function () {
             this.eightsprite.texture = this.eightstock;
-            this.sixsprite.texture = this.sixstock;
+            this.sixsprite.texture = this.sixpress;
             this.tensprite.texture = this.tenstock;
         };
         return buttonplace;
@@ -155,6 +157,7 @@ define(["require", "exports", "./Place.js"], function (require, exports, Place_j
                 use3.texture = stock3;
                 use4.texture = stock4;
                 timeforgame = value;
+                Click();
                 setInterval(function () {
                     if (statusstart == true)
                         this.refreshbuttontime();
@@ -162,7 +165,7 @@ define(["require", "exports", "./Place.js"], function (require, exports, Place_j
             }.bind(this));
         };
         buttontime.prototype.refreshbuttontime = function () {
-            this.fivesprite.texture = this.fivestock;
+            this.fivesprite.texture = this.fivepress;
             this.tensprite.texture = this.tenstock;
             this.fifteensprite.texture = this.fifteenstock;
             this.thirtysprite.texture = this.thirtystock;
@@ -172,7 +175,7 @@ define(["require", "exports", "./Place.js"], function (require, exports, Place_j
     exports.buttontime = buttontime;
     var soundbuttom = /** @class */ (function (_super) {
         __extends(soundbuttom, _super);
-        function soundbuttom() {
+        function soundbuttom(place) {
             var _this = _super.call(this) || this;
             _this.onstock = Place_js_1.Place.res.on.texture;
             _this.onbring = Place_js_1.Place.res.onbring.texture;
@@ -200,18 +203,25 @@ define(["require", "exports", "./Place.js"], function (require, exports, Place_j
             _this.offsoundsprite.scale.set(0.8, 0.8);
             _this.offmusicsprite.position.set(positionstockX * 6.5, positionstockY * 2.75);
             _this.offmusicsprite.scale.set(0.8, 0.8);
-            _this.optionbuttom(_this.onmusicsprite, _this.offmusicsprite, _this.onpress, _this.onbring, _this.onstock, _this.offstock, true, 0);
-            _this.optionbuttom(_this.offmusicsprite, _this.onmusicsprite, _this.offpress, _this.offbring, _this.offstock, _this.onstock, false, 0);
-            _this.optionbuttom(_this.onsoundsprite, _this.offsoundsprite, _this.onpress, _this.onbring, _this.onstock, _this.offstock, true, 1);
-            _this.optionbuttom(_this.offsoundsprite, _this.onsoundsprite, _this.offpress, _this.offbring, _this.offstock, _this.onstock, false, 1);
-            _this.refreshbuttonsound();
+            _this.optionbuttom(_this.onmusicsprite, _this.offmusicsprite, _this.onpress, _this.onbring, _this.onstock, _this.offstock, true, 0, place);
+            _this.optionbuttom(_this.offmusicsprite, _this.onmusicsprite, _this.offpress, _this.offbring, _this.offstock, _this.onstock, false, 0, place);
+            _this.optionbuttom(_this.onsoundsprite, _this.offsoundsprite, _this.onpress, _this.onbring, _this.onstock, _this.offstock, true, 1, place);
+            _this.optionbuttom(_this.offsoundsprite, _this.onsoundsprite, _this.offpress, _this.offbring, _this.offstock, _this.onstock, false, 1, place);
+            _this.refreshbuttonsound(_this.onsoundsprite, _this.offsoundsprite, soundvalue);
+            _this.refreshbuttonsound(_this.onmusicsprite, _this.offmusicsprite, musicvalue);
             _this.addChild(_this.onsoundsprite);
             _this.addChild(_this.onmusicsprite);
             _this.addChild(_this.offsoundsprite);
             _this.addChild(_this.offmusicsprite);
+            setInterval(function () {
+                if (statusstart == true) {
+                    this.refreshbuttonsound(this.onsoundsprite, this.offsoundsprite, soundvalue);
+                    this.refreshbuttonsound(this.onmusicsprite, this.offmusicsprite, musicvalue);
+                }
+            }.bind(_this), 1000);
             return _this;
         }
-        soundbuttom.prototype.optionbuttom = function (use, use2, press, bring, stock, stock2, valuesound, who) {
+        soundbuttom.prototype.optionbuttom = function (use, use2, press, bring, stock, stock2, valuesound, who, place) {
             use.on("mouseover", function () {
                 if (use.texture != press) {
                     use.texture = bring;
@@ -225,23 +235,28 @@ define(["require", "exports", "./Place.js"], function (require, exports, Place_j
             use.on("mouseup", function () {
                 use.texture = press;
                 use2.texture = stock2;
+                Click();
                 if (who == 1) {
                     soundvalue = valuesound;
                 }
                 else {
                     musicvalue = valuesound;
                 }
-                setInterval(function () {
-                    if (statusstart == true)
-                        this.refreshbuttonsound();
-                }.bind(this), 1000);
+                if (musicvalue == false)
+                    place.PauseMusic();
+                else
+                    place.ResumeMusic();
             }.bind(this));
         };
-        soundbuttom.prototype.refreshbuttonsound = function () {
-            this.onsoundsprite.texture = this.onstock;
-            this.onmusicsprite.texture = this.onstock;
-            this.offsoundsprite.texture = this.offstock;
-            this.offmusicsprite.texture = this.offstock;
+        soundbuttom.prototype.refreshbuttonsound = function (use, use2, value) {
+            if (value == true) {
+                use.texture = this.onpress;
+                use2.texture = this.offstock;
+            }
+            else {
+                use.texture = this.onstock;
+                use2.texture = this.offpress;
+            }
         };
         return soundbuttom;
     }(Container));
@@ -271,16 +286,12 @@ define(["require", "exports", "./Place.js"], function (require, exports, Place_j
             }.bind(_this));
             _this.startsprite.on("mouseup", function () {
                 this.startsprite.texture = this.startpress;
+                Click();
                 this.emit("click");
                 setTimeout(function () {
                     this.startsprite.texture = this.startstock;
-                    if (musicvalue == undefined || sizeField == undefined || soundvalue == undefined || timeforgame == undefined) {
-                        place.ShowError();
-                    }
-                    else {
-                        statusstart = true;
-                        place.showGameField(sizeField, timeforgame);
-                    }
+                    statusstart = true;
+                    place.showGameField(sizeField, timeforgame);
                 }.bind(this), 200);
             }.bind(_this));
             _this.startsprite.texture = _this.startstock;
@@ -292,7 +303,7 @@ define(["require", "exports", "./Place.js"], function (require, exports, Place_j
     exports.startbutton = startbutton;
     var soundgamebutton = /** @class */ (function (_super) {
         __extends(soundgamebutton, _super);
-        function soundgamebutton() {
+        function soundgamebutton(gamesound) {
             var _this = _super.call(this) || this;
             _this.soundbuttonon = Place_js_1.Place.res.soundbuttonon.texture;
             _this.soundbuttonoff = Place_js_1.Place.res.soundbuttonoff.texture;
@@ -302,6 +313,7 @@ define(["require", "exports", "./Place.js"], function (require, exports, Place_j
             _this.soundforgame.anchor.set(0.5);
             _this.soundforgame.interactive = true;
             _this.soundforgame.buttonMode = true;
+            gamesound.statussound = soundvalue;
             _this.soundforgame.on("mouseover", function () {
                 if (soundvalue == true) {
                     this.soundforgame.texture = this.soundbuttonoff;
@@ -319,6 +331,7 @@ define(["require", "exports", "./Place.js"], function (require, exports, Place_j
                 }
             }.bind(_this));
             _this.soundforgame.on("mouseup", function () {
+                Click();
                 if (soundvalue == true) {
                     this.soundforgame.texture = this.soundbuttonoff;
                     soundvalue = false;
@@ -328,6 +341,7 @@ define(["require", "exports", "./Place.js"], function (require, exports, Place_j
                     soundvalue = true;
                 }
                 this.emit("click");
+                gamesound.statussound = soundvalue;
             }.bind(_this));
             if (soundvalue == true) {
                 _this.soundforgame.texture = _this.soundbuttonon;
@@ -335,15 +349,28 @@ define(["require", "exports", "./Place.js"], function (require, exports, Place_j
             else {
                 _this.soundforgame.texture = _this.soundbuttonoff;
             }
+            _this.checkpause();
             _this.addChild(_this.soundforgame);
             return _this;
         }
+        soundgamebutton.prototype.checkpause = function () {
+            setInterval(function () {
+                if (statuspause == true) {
+                    this.soundforgame.interactive = false;
+                    this.soundforgame.buttonMode = false;
+                }
+                else {
+                    this.soundforgame.interactive = true;
+                    this.soundforgame.buttonMode = true;
+                }
+            }.bind(this), 1000);
+        };
         return soundgamebutton;
     }(Container));
     exports.soundgamebutton = soundgamebutton;
     var musicgamebutton = /** @class */ (function (_super) {
         __extends(musicgamebutton, _super);
-        function musicgamebutton() {
+        function musicgamebutton(place) {
             var _this = _super.call(this) || this;
             _this.musicbuttonon = Place_js_1.Place.res.musicbuttonon.texture;
             _this.musicbuttonoff = Place_js_1.Place.res.musicbuttonoff.texture;
@@ -370,12 +397,15 @@ define(["require", "exports", "./Place.js"], function (require, exports, Place_j
                 }
             }.bind(_this));
             _this.musicforgame.on("mouseup", function () {
+                Click();
                 if (musicvalue == true) {
                     this.musicforgame.texture = this.musicbuttonoff;
+                    place.PauseMusic();
                     musicvalue = false;
                 }
                 else {
                     this.musicforgame.texture = this.musicbuttonon;
+                    place.ResumeMusic();
                     musicvalue = true;
                 }
                 this.emit("click");
@@ -386,9 +416,22 @@ define(["require", "exports", "./Place.js"], function (require, exports, Place_j
             else {
                 _this.musicforgame.texture = _this.musicbuttonoff;
             }
+            _this.checkpause();
             _this.addChild(_this.musicforgame);
             return _this;
         }
+        musicgamebutton.prototype.checkpause = function () {
+            setInterval(function () {
+                if (statuspause == true) {
+                    this.musicforgame.interactive = false;
+                    this.musicforgame.buttonMode = false;
+                }
+                else {
+                    this.musicforgame.interactive = true;
+                    this.musicforgame.buttonMode = true;
+                }
+            }.bind(this), 1000);
+        };
         return musicgamebutton;
     }(Container));
     exports.musicgamebutton = musicgamebutton;
@@ -412,6 +455,9 @@ define(["require", "exports", "./Place.js"], function (require, exports, Place_j
             }.bind(_this));
             _this.pausegame.on("mouseup", function () {
                 this.pausegame.texture = this.pausebuttonpress;
+                Click();
+                statuspause = true;
+                this.checkpause();
                 this.emit("click");
                 setTimeout(function () {
                     this.pausegame.texture = this.pausebutton;
@@ -422,6 +468,18 @@ define(["require", "exports", "./Place.js"], function (require, exports, Place_j
             _this.addChild(_this.pausegame);
             return _this;
         }
+        pausebutton.prototype.checkpause = function () {
+            setInterval(function () {
+                if (statuspause == true) {
+                    this.pausegame.interactive = false;
+                    this.pausegame.buttonMode = false;
+                }
+                else {
+                    this.pausegame.interactive = true;
+                    this.pausegame.buttonMode = true;
+                }
+            }.bind(this), 1000);
+        };
         return pausebutton;
     }(Container));
     exports.pausebutton = pausebutton;
@@ -445,6 +503,8 @@ define(["require", "exports", "./Place.js"], function (require, exports, Place_j
             }.bind(_this));
             _this.playgame.on("mouseup", function () {
                 this.playgame.texture = this.playbuttonpress;
+                Click();
+                statuspause = false;
                 this.emit("click");
                 setTimeout(function () {
                     this.playgame.texture = this.playbutton;
@@ -458,39 +518,6 @@ define(["require", "exports", "./Place.js"], function (require, exports, Place_j
         return playbutton;
     }(Container));
     exports.playbutton = playbutton;
-    var OK = /** @class */ (function (_super) {
-        __extends(OK, _super);
-        function OK(place) {
-            var _this = _super.call(this) || this;
-            _this.OKbutton = Place_js_1.Place.res.OK.texture;
-            _this.OKbuttonpress = Place_js_1.Place.res.OKpress.texture;
-            _this.OK = new Sprite();
-            _this.OK.position.set(1024 / 2, 1024 * 0.6);
-            _this.OK.anchor.set(0.5);
-            _this.OK.scale.set(0.4);
-            _this.OK.interactive = true;
-            _this.OK.buttonMode = true;
-            _this.OK.on("mouseover", function () {
-                this.OK.texture = this.OKbuttonpress;
-            }.bind(_this));
-            _this.OK.on("mouseout", function () {
-                this.OK.texture = this.OKbutton;
-            }.bind(_this));
-            _this.OK.on("mouseup", function () {
-                this.OK.texture = this.OKbuttonpress;
-                this.emit("click");
-                setTimeout(function () {
-                    this.OK.texture = this.OKbutton;
-                    place.CloseError();
-                }.bind(this), 200);
-            }.bind(_this));
-            _this.OK.texture = _this.OKbutton;
-            _this.addChild(_this.OK);
-            return _this;
-        }
-        return OK;
-    }(Container));
-    exports.OK = OK;
     var restartgame = /** @class */ (function (_super) {
         __extends(restartgame, _super);
         function restartgame(place) {
@@ -514,6 +541,7 @@ define(["require", "exports", "./Place.js"], function (require, exports, Place_j
             }.bind(_this));
             _this.buttonrestart.on("mouseup", function () {
                 this.buttonrestart.texture = this.restartpress;
+                Click();
                 this.emit("click");
                 setTimeout(function () {
                     this.buttonrestart.texture = this.restartstock;
@@ -553,20 +581,34 @@ define(["require", "exports", "./Place.js"], function (require, exports, Place_j
             }.bind(_this));
             _this.buttonbackmenu.on("mouseup", function () {
                 this.buttonbackmenu.texture = this.backmenupress;
+                Click();
                 this.emit("click");
                 setTimeout(function () {
                     this.buttonbackmenu.texture = this.backmenustock;
-                    sizeField = undefined;
-                    timeforgame = undefined;
+                    sizeField = 6;
+                    timeforgame = 5 * 60;
                     statusstart = false;
                     place.BackToMenu();
                 }.bind(this), 200);
             }.bind(_this));
             _this.buttonbackmenu.texture = _this.backmenustock;
+            _this.checkpause();
             _this.addChild(_this.backgroundbackmenu);
             _this.addChild(_this.buttonbackmenu);
             return _this;
         }
+        backmenu.prototype.checkpause = function () {
+            setInterval(function () {
+                if (statuspause == true) {
+                    this.buttonbackmenu.interactive = false;
+                    this.buttonbackmenu.buttonMode = false;
+                }
+                else {
+                    this.buttonbackmenu.interactive = true;
+                    this.buttonbackmenu.buttonMode = true;
+                }
+            }.bind(this), 1000);
+        };
         return backmenu;
     }(Container));
     exports.backmenu = backmenu;
@@ -589,7 +631,9 @@ define(["require", "exports", "./Place.js"], function (require, exports, Place_j
                 this.TheEndButon.texture = this.TheEndstock;
             }.bind(_this));
             _this.TheEndButon.on("mouseup", function () {
+                Click();
                 this.TheEndButon.texture = this.TheEndpress;
+                statuspause = false;
                 this.emit("click");
                 setTimeout(function () {
                     this.TheEndButon.texture = this.TheEndstock;
@@ -629,6 +673,7 @@ define(["require", "exports", "./Place.js"], function (require, exports, Place_j
             }.bind(_this));
             _this.redrawButon.on("mouseup", function () {
                 this.redrawButon.texture = this.redrawpress;
+                Click();
                 this.emit("click");
                 setTimeout(function () {
                     this.redrawButon.texture = this.redrawstock;
@@ -636,12 +681,31 @@ define(["require", "exports", "./Place.js"], function (require, exports, Place_j
                 }.bind(this), 200);
             }.bind(_this));
             _this.redrawButon.texture = _this.redrawstock;
+            _this.checkpause();
             _this.addChild(_this.redrawbackground);
             _this.addChild(_this.redrawButon);
             return _this;
         }
+        ReDraw.prototype.checkpause = function () {
+            setInterval(function () {
+                if (statuspause == true) {
+                    this.redrawButon.interactive = false;
+                    this.redrawButon.buttonMode = false;
+                }
+                else {
+                    this.redrawButon.interactive = true;
+                    this.redrawButon.buttonMode = true;
+                }
+            }.bind(this), 1000);
+        };
         return ReDraw;
     }(Container));
     exports.ReDraw = ReDraw;
+    function Click() {
+        if (soundvalue == true) {
+            Place_js_1.Place.res.click.sound.volume = 0.5;
+            Place_js_1.Place.res.click.sound.play();
+        }
+    }
 });
 //# sourceMappingURL=Button.js.map

@@ -14,7 +14,8 @@
   "author": "Toha22BSK",
   "license": "ISC",
   "dependencies": {
-    "express": ""
+    "express": "",
+    "pixi-sound": "^3.0.4"
   },
   "bugs": {
     "url": "https://github.com/Toha22BSK/pixi-game-cg/issues"

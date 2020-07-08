@@ -25,7 +25,7 @@ define(["require", "exports", "./Place.js", "./Button.js"], function (require, e
             var _this = _super.call(this) || this;
             _this.Buttonplace = new Button_js_1.buttonplace();
             _this.StartButton = new Button_js_1.startbutton(place);
-            _this.Buttonsound = new Button_js_1.soundbuttom();
+            _this.Buttonsound = new Button_js_1.soundbuttom(place);
             _this.Buttontime = new Button_js_1.buttontime();
             _this.addChild(_this.Buttonplace);
             _this.addChild(_this.Buttontime);

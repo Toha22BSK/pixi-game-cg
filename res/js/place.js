@@ -11,7 +11,7 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-define(["require", "exports", "./MenuGame.js", "./Button.js", "./Preview.js", "./Game.js", "./Error.js"], function (require, exports, MenuGame_js_1, Button_js_1, Preview_js_1, Game_js_1, Error_js_1) {
+define(["require", "exports", "./MenuGame.js", "./Preview.js", "./Game.js"], function (require, exports, MenuGame_js_1, Preview_js_1, Game_js_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.Place = void 0;
@@ -22,15 +22,16 @@ define(["require", "exports", "./MenuGame.js", "./Button.js", "./Preview.js", ".
         function Place(resources) {
             var _this = _super.call(this) || this;
             Place.res = resources;
+            _this.soundback = Place.res.backgroundsound.sound;
             _this.MenuGame = new MenuGame_js_1.menugame(_this);
-            _this.OK = new Button_js_1.OK(_this);
-            _this.ErrorOption = new Error_js_1.erroroption();
             _this.Preview = new Preview_js_1.preview(_this);
             _this.backgroundSprite = new Sprite(Place.res.background.texture);
             _this.backgroundSprite.width = Place.size;
             _this.backgroundSprite.height = Place.size;
             _this.addChild(_this.backgroundSprite);
             _this.addChild(_this.Preview);
+            _this.soundback.volume = 0.25;
+            _this.soundback.play({ loop: true });
             return _this;
         }
         Place.prototype.showMenu = function () {
@@ -42,18 +43,8 @@ define(["require", "exports", "./MenuGame.js", "./Button.js", "./Preview.js", ".
             this.removeChild(this.MenuGame);
             this.addChild(this.GameField);
         };
-        Place.prototype.ShowError = function () {
-            this.ScaleHigh(this.ErrorOption);
-            this.ScaleHigh(this.OK);
-            this.addChild(this.ErrorOption);
-            this.addChild(this.OK);
-        };
         Place.prototype.End = function () {
             this.removeChild(this.GameField);
-        };
-        Place.prototype.CloseError = function () {
-            this.removeChild(this.ErrorOption);
-            this.removeChild(this.OK);
         };
         Place.prototype.restartgamefield = function (value1, value2) {
             this.removeChild(this.GameField);
@@ -63,8 +54,11 @@ define(["require", "exports", "./MenuGame.js", "./Button.js", "./Preview.js", ".
             this.removeChild(this.GameField);
             this.showMenu();
         };
-        Place.prototype.ScaleHigh = function (use) {
-            TweenMax.fromTo(use.scale, 1, { x: 0, y: 0 }, { x: 1, y: 1 });
+        Place.prototype.PauseMusic = function () {
+            this.soundback.pause();
+        };
+        Place.prototype.ResumeMusic = function () {
+            this.soundback.resume();
         };
         Place.size = 1024;
         return Place;

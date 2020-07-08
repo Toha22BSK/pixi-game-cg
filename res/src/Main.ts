@@ -3,6 +3,7 @@ import Loader = PIXI.Loader;
 import { Place } from "./Place.js"
 
 const loader: Loader = new Loader();
+const soundgame: Loader = new Loader();
 
 let width = window.innerWidth;
 let height = window.innerHeight;
@@ -82,10 +83,15 @@ loader.add("backgroundbuttonfield", "res/media/pictures/backgroundbuttongamefiel
 loader.add("MenuButton", "res/media/pictures/MenuButton.png");
 loader.add("MenuButtonbring", "res/media/pictures/MenuButtonbring.png");
 loader.add("MenuButtonpress", "res/media/pictures/MenuButtonpress.png");
-loader.add("redraw", "res/media/pictures/redraw.png")
-loader.add("redrawbring", "res/media/pictures/redrawbring.png")
-loader.add("redrawpress", "res/media/pictures/redrawpress.png")
-
+loader.add("pressball", "res/media/pictures/pressball.png");
+loader.add("redraw", "res/media/pictures/redraw.png");
+loader.add("redrawbring", "res/media/pictures/redrawbring.png");
+loader.add("redrawpress", "res/media/pictures/redrawpress.png");
+loader.add("backgroundsound", "res/media/music/backgroundsound.mp3");
+loader.add("click", "res/media/music/click.mp3");
+loader.add("clickball", "res/media/music/clickball.wav");
+loader.add("crushball", "res/media/music/crushbals.wav");
+loader.add("false", "res/media/music/false.mp3");
 
 
 

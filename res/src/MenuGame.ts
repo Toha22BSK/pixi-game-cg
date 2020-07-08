@@ -20,7 +20,7 @@ export class menugame extends Container{
         super();
         this.Buttonplace = new buttonplace();
         this.StartButton = new startbutton(place);
-        this.Buttonsound = new soundbuttom();
+        this.Buttonsound = new soundbuttom(place);
         this.Buttontime = new buttontime();
         this.addChild(this.Buttonplace);
         this.addChild(this.Buttontime);
