@@ -88,7 +88,7 @@ define(["require", "exports", "./Place.js"], function (require, exports, Place_j
     loader.add("redrawpress", "res/media/pictures/redrawpress.png");
     loader.add("backgroundsound", "res/media/music/backgroundsound.mp3");
     loader.add("click", "res/media/music/click.mp3");
-    loader.add("clickball", "res/media/music/clickball.wav");
+    loader.add("clickball", "res/media/music/clickball.mp3");
     loader.add("crushball", "res/media/music/crushbals.wav");
     loader.add("false", "res/media/music/false.mp3");
     loader.load(setup);
