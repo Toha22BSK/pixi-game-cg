@@ -415,7 +415,8 @@ export class gamefield extends Container {
             }
             else {
                 console.error(this.selectball[1].position.x);
-                console.error(this.selectball[0].position.x - this.widthtexture * 1.2);   
+                console.error(this.selectball[0].position.x - this.widthtexture * 1.2);
+                this.removeChild(this.pressball);   
                 this.count = 0;
                 this.selectball = new Array();
             }
