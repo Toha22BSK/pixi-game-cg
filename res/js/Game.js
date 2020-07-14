@@ -316,18 +316,16 @@ define(["require", "exports", "./Place.js", "./GameOver.js", "./Button.js"], fun
                     Place_js_1.Place.res.crushball.sound.volume = 0.4;
                     Place_js_1.Place.res.crushball.sound.play();
                 }
-                var scoreanimate = new TimelineMax({ repeat: 1, repeatDelay: 2, onComplete: function () { this.scoretext.text = String(this.ScoreGame); }.bind(this), onUpdate: function () { this.scoretext.text = "+" + String(this.scoreplus); }.bind(this) });
-                var t1 = new TimelineMax({ repeat: 1, repeatDelay: 2, onComplete: function () { this.scoreplus = 0; }.bind(this) });
+                var scoreanimate = new TimelineMax({ repeat: 1, repeatDelay: 1.5, onComplete: function () { this.scoretext.text = String(this.ScoreGame); }.bind(this), onUpdate: function () { this.scoretext.text = "+" + String(this.scoreplus); }.bind(this) });
+                var t1 = new TimelineMax({ repeat: 1, repeatDelay: 1.6, onComplete: function () { this.scoreplus = 0; }.bind(this) });
+                this.balldown();
             }
         };
         gamefield.prototype.deadball = function (use) {
             for (var i = 0; i < use.length - 1; i++) {
-                this.removeChild(this.balls[use[i++]][use[i]]);
-                i--;
                 this.balls[use[i++]][use[i]].visible = false;
             }
             this.scoreplus += (use.length / 2 + 2) * 50;
-            console.error(this.scoreplus);
             use = new Array();
         };
         gamefield.prototype.interactiveoff = function () {
@@ -377,8 +375,6 @@ define(["require", "exports", "./Place.js", "./GameOver.js", "./Button.js"], fun
                     this.count = 0;
                 }
                 else {
-                    console.error(this.selectball[1].position.x);
-                    console.error(this.selectball[0].position.x - this.widthtexture * 1.2);
                     this.removeChild(this.pressball);
                     this.count = 0;
                     this.selectball = new Array();
@@ -395,10 +391,10 @@ define(["require", "exports", "./Place.js", "./GameOver.js", "./Button.js"], fun
             this.selectball = new Array();
         };
         gamefield.prototype.changealphadown = function (use) {
-            TweenMax.fromTo(this.selectball, 1, { alpha: 1 }, { alpha: 0 });
+            TweenMax.fromTo(use, 1, { alpha: 1 }, { alpha: 0 });
         };
         gamefield.prototype.changealphaup = function (use) {
-            TweenMax.fromTo(this.selectball, 1, { alpha: 0 }, { alpha: 1 });
+            TweenMax.fromTo(use, 1, { alpha: 0 }, { alpha: 1 });
             var wait = new TimelineMax({ repeat: 1, repeatDelay: 1, onComplete: this.findball.bind(this) });
         };
         gamefield.prototype.checkswap = function (use) {
@@ -418,8 +414,6 @@ define(["require", "exports", "./Place.js", "./GameOver.js", "./Button.js"], fun
                 }
             }
             if (Math.abs(Math.abs(koordinat[0] - koordinat[2]) - Math.abs(koordinat[1] - koordinat[3])) == 1) {
-                console.error(koordinat[1]);
-                console.error(koordinat[3]);
                 if (koordinat[1] > koordinat[3]) {
                     temp = koordinat[1];
                     koordinat[1] = koordinat[3];
@@ -433,14 +427,11 @@ define(["require", "exports", "./Place.js", "./GameOver.js", "./Button.js"], fun
                 this.swapany(koordinat);
                 for (var i = koordinat[1]; i <= koordinat[3]; i++) {
                     n = 1;
-                    console.error(i);
                     for (var j = 1; j < this.sizefield; j++) {
                         if (this.balls[j - 1][i].texture == this.balls[j][i].texture && this.balls[j][i].visible != false) {
                             n++;
-                            console.error(n);
                             if (n >= 3)
                                 this.swapstatus = true;
-                            console.error(this.swapstatus);
                         }
                         else
                             n = 1;
@@ -448,11 +439,9 @@ define(["require", "exports", "./Place.js", "./GameOver.js", "./Button.js"], fun
                 }
                 for (var i = koordinat[0]; i <= koordinat[2]; i++) {
                     n = 1;
-                    console.error(i);
                     for (var j = 1; j < this.sizefield; j++) {
                         if (this.balls[i][j - 1].texture == this.balls[i][j].texture && this.balls[i][j].visible != false) {
                             n++;
-                            console.error(n);
                             if (n >= 3)
                                 this.swapstatus = true;
                         }
@@ -512,11 +501,58 @@ define(["require", "exports", "./Place.js", "./GameOver.js", "./Button.js"], fun
                 }
             }
         };
+        gamefield.prototype.alphadown = function (use) {
+            TweenMax.fromTo(use, 1, { alpha: 1 }, { alpha: 0 });
+        };
+        gamefield.prototype.alphaup = function (use) {
+            TweenMax.fromTo(use, 1, { alpha: 0 }, { alpha: 1 });
+        };
         gamefield.prototype.swapany = function (use) {
             var temp;
             temp = this.balls[use[0]][use[1]].texture;
             this.balls[use[0]][use[1]].texture = this.balls[use[2]][use[3]].texture;
             this.balls[use[2]][use[3]].texture = temp;
+        };
+        gamefield.prototype.balldown = function () {
+            this.interactiveoff();
+            var n = 0;
+            var last = 0;
+            function swapdown(j, i, kol) {
+                if (this.balls[j][i].visible == false) {
+                    this.balls[j][i].visible = true;
+                }
+                this.balls[j][i].texture = this.balls[j - kol][i].texture;
+            }
+            for (var i = 0; i < this.sizefield; i++) {
+                n = 0;
+                for (var j = 0; j < this.sizefield; j++) {
+                    if (this.balls[j][i].visible == false) {
+                        n++;
+                        last = j;
+                    }
+                    if (j == this.sizefield - 1 && n != 0) {
+                        for (var k = last; k >= 0 + n; k--) {
+                            var t1 = new TimelineMax({ repeat: 1, repeatDelay: 0, onComplete: this.alphadown.bind(this, this.balls[k][i]) });
+                            var t2 = new TimelineMax({ repeat: 1, repeatDelay: 0.8, onComplete: swapdown.bind(this, k, i, n) });
+                            var t3 = new TimelineMax({ repeat: 1, repeatDelay: 0.8, onComplete: this.alphaup.bind(this, this.balls[k][i]) });
+                        }
+                        for (var l = n - 1; l >= 0; l--) {
+                            if (this.balls[l][i].visible == false)
+                                this.balls[l][i].visible = true;
+                            var t4 = new TimelineMax({ repeat: 1, repeatDelay: 0, onComplete: this.alphadown.bind(this, this.balls[l][i]) });
+                            var t5 = new TimelineMax({ repeat: 1, repeatDelay: 0.8, onComplete: this.addnewball.bind(this, l, i) });
+                            var t6 = new TimelineMax({ repeat: 1, repeatDelay: 0.8, onComplete: this.alphaup.bind(this, this.balls[l][i]) });
+                        }
+                    }
+                }
+            }
+            var t7 = new TimelineMax({ repeat: 1, repeatDelay: 1.6, onComplete: this.findball.bind(this) });
+            var t8 = new TimelineMax({ repeat: 1, repeatDelay: 1.6, onComplete: this.interactiveon.bind(this) });
+        };
+        gamefield.prototype.addnewball = function (j, i) {
+            var typetexture = Math.floor(Math.random() * 6);
+            this.balls[j][i].texture = this.textureballs[typetexture];
+            console.error(this.balls[j][i].visible);
         };
         return gamefield;
     }(Container));

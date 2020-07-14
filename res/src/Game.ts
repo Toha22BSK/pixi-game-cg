@@ -130,7 +130,7 @@ export class gamefield extends Container {
 
         // let timebild = new TimelineMax({ repeat: 1, repeatDelay: 5, onComplete: this.findball.bind(this) });
         // this.findball();
-         this.timeforgame = new TimelineMax({ repeat: 1, repeatDelay: this.timergame, onComplete: this.StartGameOver.bind(this, place) });
+        this.timeforgame = new TimelineMax({ repeat: 1, repeatDelay: this.timergame, onComplete: this.StartGameOver.bind(this, place) });
 
 
     }
@@ -348,21 +348,19 @@ export class gamefield extends Container {
                 Place.res.crushball.sound.volume = 0.4;
                 Place.res.crushball.sound.play()
             }
-            let scoreanimate = new TimelineMax({ repeat: 1, repeatDelay: 2, onComplete: function () { this.scoretext.text = String(this.ScoreGame); }.bind(this), onUpdate: function () { this.scoretext.text = "+" + String(this.scoreplus) }.bind(this) });
-            let t1 = new TimelineMax({ repeat: 1, repeatDelay: 2, onComplete: function () { this.scoreplus = 0; }.bind(this) });
+            let scoreanimate = new TimelineMax({ repeat: 1, repeatDelay: 1.5, onComplete: function () { this.scoretext.text = String(this.ScoreGame); }.bind(this), onUpdate: function () { this.scoretext.text = "+" + String(this.scoreplus) }.bind(this) });
+            let t1 = new TimelineMax({ repeat: 1, repeatDelay: 1.6, onComplete: function () { this.scoreplus = 0; }.bind(this) });
+            this.balldown();
         }
     }
     public deadball(use: any) {
 
         for (let i = 0; i < use.length - 1; i++) {
-            this.removeChild(this.balls[use[i++]][use[i]]);
-            i--;
             this.balls[use[i++]][use[i]].visible = false;
-
         }
         this.scoreplus += (use.length / 2 + 2) * 50;
-        console.error(this.scoreplus);
         use = new Array();
+        
 
     }
     public interactiveoff() {
@@ -414,9 +412,7 @@ export class gamefield extends Container {
                 this.count = 0;
             }
             else {
-                console.error(this.selectball[1].position.x);
-                console.error(this.selectball[0].position.x - this.widthtexture * 1.2);
-                this.removeChild(this.pressball);   
+                this.removeChild(this.pressball);
                 this.count = 0;
                 this.selectball = new Array();
             }
@@ -433,10 +429,10 @@ export class gamefield extends Container {
         this.selectball = new Array();
     }
     public changealphadown(use: any) {
-        TweenMax.fromTo(this.selectball, 1, { alpha: 1 }, { alpha: 0 });
+        TweenMax.fromTo(use, 1, { alpha: 1 }, { alpha: 0 });
     }
     public changealphaup(use: any) {
-        TweenMax.fromTo(this.selectball, 1, { alpha: 0 }, { alpha: 1 });
+        TweenMax.fromTo(use, 1, { alpha: 0 }, { alpha: 1 });
         let wait = new TimelineMax({ repeat: 1, repeatDelay: 1, onComplete: this.findball.bind(this) });
     }
     public checkswap(use: any) {
@@ -455,52 +451,45 @@ export class gamefield extends Container {
                 }
             }
         }
-        if (Math.abs(Math.abs(koordinat[0] - koordinat[2]) - Math.abs(koordinat[1] - koordinat[3])) == 1){
-        console.error(koordinat[1]);
-        console.error(koordinat[3]);
+        if (Math.abs(Math.abs(koordinat[0] - koordinat[2]) - Math.abs(koordinat[1] - koordinat[3])) == 1) {
 
-        if (koordinat[1] > koordinat[3]) {
-            temp = koordinat[1];
-            koordinat[1] = koordinat[3];
-            koordinat[3] = temp;
+            if (koordinat[1] > koordinat[3]) {
+                temp = koordinat[1];
+                koordinat[1] = koordinat[3];
+                koordinat[3] = temp;
 
-        }
-        if (koordinat[0] > koordinat[2]) {
-            temp = koordinat[0];
-            koordinat[0] = koordinat[2];
-            koordinat[2] = temp;
-        }
-        this.swapany(koordinat);
-        for (let i = koordinat[1]; i <= koordinat[3]; i++) {
-            n = 1;
-            console.error(i);
-            for (let j = 1; j < this.sizefield; j++) {
-                if (this.balls[j - 1][i].texture == this.balls[j][i].texture && this.balls[j][i].visible != false) {
-                    n++;
-                    console.error(n);
-                    if ( n >= 3)
-                        this.swapstatus = true;
-                    console.error(this.swapstatus);
-                }else
-                    n = 1;
+            }
+            if (koordinat[0] > koordinat[2]) {
+                temp = koordinat[0];
+                koordinat[0] = koordinat[2];
+                koordinat[2] = temp;
+            }
+            this.swapany(koordinat);
+            for (let i = koordinat[1]; i <= koordinat[3]; i++) {
+                n = 1;
+                for (let j = 1; j < this.sizefield; j++) {
+                    if (this.balls[j - 1][i].texture == this.balls[j][i].texture && this.balls[j][i].visible != false) {
+                        n++;
+                        if (n >= 3)
+                            this.swapstatus = true;
+                    } else
+                        n = 1;
                 }
             }
 
-        
-        for (let i = koordinat[0]; i <= koordinat[2]; i++) {
-            n = 1;
-            console.error(i);
-            for (let j = 1; j < this.sizefield; j++) {
-                if (this.balls[i][j - 1].texture == this.balls[i][j].texture && this.balls[i][j].visible != false) {
-                    n++;
-                    console.error(n);
-                    if (n >= 3)
-                        this.swapstatus = true;
-                } else
-                    n = 1;
+
+            for (let i = koordinat[0]; i <= koordinat[2]; i++) {
+                n = 1;
+                for (let j = 1; j < this.sizefield; j++) {
+                    if (this.balls[i][j - 1].texture == this.balls[i][j].texture && this.balls[i][j].visible != false) {
+                        n++;
+                        if (n >= 3)
+                            this.swapstatus = true;
+                    } else
+                        n = 1;
                 }
             }
-        this.swapany(koordinat);
+            this.swapany(koordinat);
         }
 
     }
@@ -560,11 +549,59 @@ export class gamefield extends Container {
             }
         }
     }
+    private alphadown(use: any) {
+        TweenMax.fromTo(use, 1, { alpha: 1 }, { alpha: 0 });
+    }
+    private alphaup(use: any) {
+        TweenMax.fromTo(use, 1, { alpha: 0 }, { alpha: 1 });
+    }
     private swapany(use: number[]) {
         let temp: Texture;
         temp = this.balls[use[0]][use[1]].texture;
         this.balls[use[0]][use[1]].texture = this.balls[use[2]][use[3]].texture;
         this.balls[use[2]][use[3]].texture = temp;
     }
+    private balldown() {
+        this.interactiveoff();
+        let n = 0;
+        let last = 0;
+        function swapdown(j: number, i: number, kol: number) {
+            if (this.balls[j][i].visible == false){
+                this.balls[j][i].visible = true;
+            }
+                this.balls[j][i].texture = this.balls[j - kol][i].texture;
+        }
+        for (let i = 0; i < this.sizefield; i++) {
+            n = 0;
+            for (let j = 0; j < this.sizefield; j++) {
+                if (this.balls[j][i].visible == false) {
+                    n++;
+                    last = j;
+                }
+                if (j == this.sizefield - 1 && n != 0) {
+                    for (let k = last; k >= 0 + n; k--) {
+                        let t1 = new TimelineMax({ repeat: 1, repeatDelay: 0, onComplete: this.alphadown.bind(this, this.balls[k][i]) });
+                        let t2 = new TimelineMax({ repeat: 1, repeatDelay: 0.8, onComplete: swapdown.bind(this, k, i, n) });
+                        let t3 = new TimelineMax({ repeat: 1, repeatDelay: 0.8, onComplete: this.alphaup.bind(this, this.balls[k][i]) });
+                    }
+                    for (let l = n - 1; l >= 0; l--) {
+                        if (this.balls[l][i].visible == false)
+                            this.balls[l][i].visible = true;
+                        let t4 = new TimelineMax({ repeat: 1, repeatDelay: 0, onComplete: this.alphadown.bind(this, this.balls[l][i]) });
+                        let t5 = new TimelineMax({ repeat: 1, repeatDelay: 0.8, onComplete: this.addnewball.bind(this, l, i) });
+                        let t6 = new TimelineMax({ repeat: 1, repeatDelay: 0.8, onComplete: this.alphaup.bind(this, this.balls[l][i]) });
+                    }
+                }
+            }
+        }
+        let t7 = new TimelineMax({ repeat: 1, repeatDelay: 1.6, onComplete: this.findball.bind(this) });
+        let t8 = new TimelineMax({ repeat: 1, repeatDelay: 1.6, onComplete: this.interactiveon.bind(this) });
 
+    }
+    private addnewball(j: number, i: number) {
+        let typetexture = Math.floor(Math.random() * 6);
+        this.balls[j][i].texture = this.textureballs[typetexture];
+        console.error(this.balls[j][i].visible);
+
+    }
 }
