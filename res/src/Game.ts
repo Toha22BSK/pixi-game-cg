@@ -354,7 +354,6 @@ export class gamefield extends Container {
         }
     }
     public deadball(use: any) {
-
         for (let i = 0; i < use.length - 1; i++) {
             this.balls[use[i++]][use[i]].visible = false;
         }
@@ -594,8 +593,8 @@ export class gamefield extends Container {
                 }
             }
         }
-        let t7 = new TimelineMax({ repeat: 1, repeatDelay: 1.6, onComplete: this.findball.bind(this) });
         let t8 = new TimelineMax({ repeat: 1, repeatDelay: 1.6, onComplete: this.interactiveon.bind(this) });
+        let t7 = new TimelineMax({ repeat: 1, repeatDelay: 1.6, onComplete: this.findball.bind(this) });
 
     }
     private addnewball(j: number, i: number) {

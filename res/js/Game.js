@@ -546,8 +546,8 @@ define(["require", "exports", "./Place.js", "./GameOver.js", "./Button.js"], fun
                     }
                 }
             }
-            var t7 = new TimelineMax({ repeat: 1, repeatDelay: 1.6, onComplete: this.findball.bind(this) });
             var t8 = new TimelineMax({ repeat: 1, repeatDelay: 1.6, onComplete: this.interactiveon.bind(this) });
+            var t7 = new TimelineMax({ repeat: 1, repeatDelay: 1.6, onComplete: this.findball.bind(this) });
         };
         gamefield.prototype.addnewball = function (j, i) {
             var typetexture = Math.floor(Math.random() * 6);
