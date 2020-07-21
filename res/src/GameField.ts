@@ -113,7 +113,7 @@ export class GameField extends Container {
         this.timeText.style = new TextStyle({
             fontSize: 72, fontFamily: "Calibri", fill: "#00fff0", align: "center", fontWeight: Game.RES.score.texture.width, dropShadow: false
         });
-       
+
         this.scoreBackground = new Sprite(Game.RES.score.texture);
         this.scoreBackground.position.set(Game.SIZE * 0.2, this.fieldSize);
         this.scoreBackground.anchor.set(0.5);
@@ -145,8 +145,8 @@ export class GameField extends Container {
         this.addChild(this.redraw);
         this.addChild(this.backMenu);
     }
-    
-    private backFromMenu(){
+
+    private backFromMenu() {
         this.game.backToMenu(0);
         this.timerStart.kill();
     }
@@ -230,7 +230,7 @@ export class GameField extends Container {
     }
 
     private scaleAnimation(use: any): void {
-            TweenMax.fromTo(use.scale, 0.6, { x: 0, y: 0 }, { x: this.scaleBall, y: this.scaleBall });
+        TweenMax.fromTo(use.scale, 0.6, { x: 0, y: 0 }, { x: this.scaleBall, y: this.scaleBall });
     }
 
     private timerText(): void {
@@ -245,11 +245,11 @@ export class GameField extends Container {
         this.timerText();
     }
 
-    private timerEnd():void {
+    private timerEnd(): void {
         this.timerGame = 0;
         this.timerText();
-        if(!this.endStatus){
-            let wait = new TimelineMax ({repeat:1, repeatDelay: 2, onComplete: this.timerEnd.bind(this) });
+        if (!this.endStatus) {
+            let wait = new TimelineMax({ repeat: 1, repeatDelay: 2, onComplete: this.timerEnd.bind(this) });
         } else {
             this.game.showGameOver();
         }
@@ -362,7 +362,7 @@ export class GameField extends Container {
                 Game.RES.crushBall.sound.play()
             }
             let scoreAnimate = new TimelineMax({ repeat: 1, repeatDelay: 1, onComplete: function () { this.scoreText.text = String(MenuGame.scoreGame); }.bind(this), onUpdate: function () { this.scoreText.text = "+" + String(this.scorePlus) }.bind(this) });
-            let t1 = new TimelineMax({ repeat: 1, repeatDelay: 1.1, onComplete: function () { this.scorePlus = 0; this.endStatus = true;}.bind(this) });
+            let t1 = new TimelineMax({ repeat: 1, repeatDelay: 1.1, onComplete: function () { this.scorePlus = 0; this.endStatus = true; }.bind(this) });
             this.ballDown();
         }
     }
@@ -430,15 +430,15 @@ export class GameField extends Container {
         let temp: Texture = this.selectBall[0].texture;;
         this.selectBall[0].texture = this.selectBall[1].texture;
         this.selectBall[1].texture = temp;
-        this.changeAlpha(this.selectBall,true);
+        this.changeAlpha(this.selectBall, true);
         this.removeChild(this.pressBall);
         this.selectBall = new Array();
         let wait = new TimelineMax({ repeat: 1, repeatDelay: 1, onComplete: this.findBall.bind(this) });
     }
 
     private changeAlpha(use: any, why: boolean): void {
-        if(why)
-            TweenMax.fromTo(this.selectBall, 1, { alpha: 0 }, { alpha: 1 });  
+        if (why)
+            TweenMax.fromTo(this.selectBall, 1, { alpha: 0 }, { alpha: 1 });
         else
             TweenMax.fromTo(this.selectBall, 1, { alpha: 1 }, { alpha: 0 });
     }
@@ -617,7 +617,7 @@ export class GameField extends Container {
         }
 
         let t8 = new TimelineMax({ repeat: 1, repeatDelay: 1.1, onComplete: this.interactiveBall.bind(this, true) });
-        if (this.timerGame != 0){
+        if (this.timerGame != 0) {
             let t7 = new TimelineMax({ repeat: 1, repeatDelay: 1.1, onComplete: this.findBall.bind(this) });
         }
     }
@@ -625,7 +625,7 @@ export class GameField extends Container {
     private addNewBall(j: number, i: number): void {
         if (this.balls[j][i].visible == false)
             this.balls[j][i].visible = true;
-            
+
         let typetexture = Math.floor(Math.random() * 6);
         this.balls[j][i].texture = this.textureBalls[typetexture];
     }
