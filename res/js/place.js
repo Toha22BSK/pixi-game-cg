@@ -22,7 +22,7 @@ define(["require", "exports", "./MenuGame.js", "./Preview.js", "./Game.js"], fun
         function Place(resources) {
             var _this = _super.call(this) || this;
             Place.res = resources;
-            _this.soundback = Place.res.backgroundsound.sound;
+            _this.soundback = Place.res.backgroundSound.sound;
             _this.MenuGame = new MenuGame_js_1.menugame(_this);
             _this.Preview = new Preview_js_1.preview(_this);
             _this.backgroundSprite = new Sprite(Place.res.background.texture);

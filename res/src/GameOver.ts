@@ -1,85 +1,121 @@
-import Application = PIXI.Application;
 import Sprite = PIXI.Sprite;
 import Container = PIXI.Container;
-import Texture = PIXI.Texture;
-import { Place } from "./Place.js";
-import { restartgame, backmenu } from "./Button.js";
+import { Game } from "./Game";
+import { Button } from "./Button";
 import Text = PIXI.Text;
 import TextStyle = PIXI.TextStyle;
+import { MenuGame } from "./MenuGame";
 declare let TweenMax: any;
 declare let TimelineMax: any;
-export class gameover extends Container{
-    private backgroundwindow: Sprite;
-    private scoreend: Sprite;
-    private gameoversprite: Sprite;
+
+export class GameOver extends Container {
+    private backgroundWindow: Sprite;
+    private scoreEnd: Sprite;
+    private backgroundRestart: Sprite;
+    private backgroundMenu: Sprite;
+    private gameoverSprite: Sprite;
     private score: Text;
-    private RestartGame: restartgame;
-    private BackMenu: backmenu;
-    private MenuBack: Texture = Place.res.BackgroundEndButtton.texture;
-    private MenuStock: Texture = Place.res.menu.texture;
-    private MenuBring: Texture = Place.res.menubring.texture;
-    private MenuPress: Texture = Place.res.menupress.texture;
-    constructor(endscore: number, place: Place){
+    private restartGame: Button;
+    private backMenu: Button;
+    private game: Game;
+
+    constructor(endscore: number, game: Game) {
         super();
-        this.backgroundwindow = new Sprite(Place.res.black.texture);
-        this.backgroundwindow.position.set (Place.size / 2);
-        this.backgroundwindow.anchor.set (0.5);
-        this.backgroundwindow.alpha = 0.7;
-        this.scoreend = new Sprite(Place.res.score.texture);
-        this.scoreend.position.set(Place.size / 2, Place.size * 0.4);
-        this.scoreend.anchor.set(0.5);
-        this.gameoversprite = new Sprite(Place.res.GameOver.texture);
-        this.gameoversprite.position.set(Place.size / 2);
-        this.gameoversprite.anchor.set(0.5);
-        this.RestartGame = new restartgame(place);
-        this.BackMenu = new backmenu(this.MenuBack, this.MenuStock, this.MenuBring, this.MenuPress, Place.size * 0.75, Place.size * 0.73, Place.size *0.77, 1,1,place);
-        this.score = new Text(String(endscore));
+        this.game = game;
+        this.confugirationUI();
+        this.animatioGameOver();
+
+    }
+
+    private confugirationUI(): void{
+        this.backgroundWindow = new Sprite(Game.RES.black.texture);
+        this.backgroundWindow.position.set(Game.SIZE / 2);
+        this.backgroundWindow.anchor.set(0.5);
+        this.backgroundWindow.alpha = 0.7;
+
+        this.scoreEnd = new Sprite(Game.RES.score.texture);
+        this.scoreEnd.position.set(Game.SIZE / 2, Game.SIZE * 0.4);
+        this.scoreEnd.anchor.set(0.5);
+
+        this.backgroundMenu = new Sprite(Game.RES.backgroundEndButtton.texture);
+        this.backgroundMenu.position.set(Game.SIZE * 0.75, Game.SIZE * 0.737);
+        this.backgroundMenu.anchor.set(0.5);
+
+        this.backgroundRestart = new Sprite(Game.RES.backgroundEndButtton.texture);
+        this.backgroundRestart.position.set(Game.SIZE * 0.25, Game.SIZE * 0.735);
+        this.backgroundRestart.anchor.set(0.5);
+
+        this.gameoverSprite = new Sprite(Game.RES.GameOver.texture);
+        this.gameoverSprite.position.set(Game.SIZE / 2);
+        this.gameoverSprite.anchor.set(0.5);
+
+        this.backMenu = new Button("backToMenu", [Game.RES.menu.texture, Game.RES.menuBring.texture, Game.RES.menuPress.texture],
+            [Game.SIZE * 0.75, Game.SIZE * 0.78], 1);
+        this.backMenu.on("backToMenu", this.game.backToMenu.bind(this.game, 1));
+
+        this.restartGame = new Button("restartGame", [Game.RES.restart.texture, Game.RES.restartBring.texture, Game.RES.restartPress.texture],
+            [Game.SIZE * 0.25, Game.SIZE * 0.78], 1);
+        this.restartGame.on("restartGame", this.game.restartgamefield.bind(this.game, MenuGame.sizeSetting, MenuGame.timeSetting));
+
+        this.score = new Text(String(MenuGame.scoreGame));
         this.score.anchor.set(0.5);
-        this.score.position.set(Place.size / 2, Place.size * 0.45);
+        this.score.position.set(Game.SIZE / 2, Game.SIZE * 0.45);
         this.score.style = new TextStyle({
-            fontSize: 120, fontFamily: "Calibri", fill: "#00fff0", align: "center", fontWeight: Place.res.score.texture.width,
+            fontSize: 120, fontFamily: "Calibri", fill: "#00fff0", align: "center", fontWeight: Game.RES.score.texture.width,
             dropShadow: false
         });
-        this.addChild(this.backgroundwindow);
-        this.AnimatioGameOver();
 
-    }
-    public AnimatioGameOver() {
-            let animationover = new TimelineMax({ repeat: 2, repeatDelay: 0.5, onComplete: this.AnimatioGameOvertwo.bind(this), onRepeat: this.ScaleGameOver.bind(this), });
-    }
-    public AnimatioGameOvertwo() {
-        let animationscore = new TimelineMax({ repeat: 2, repeatDelay: 2, onComplete: this.AnimationScore.bind(this), onRepeat: this.AlphaGameOverDown.bind(this) });
-    }
-    public AnimationScore() {
-        let animationEnd = new TimelineMax({ repeat: 2, repeatDelay: 0.5, onComplete: this.AnimationButton.bind(this), onRepeat: this.ScaleScore.bind(this) });
-    }
-    public AnimationButton() {
-        let animationbutton = new TimelineMax({ repeat: 2, repeatDelay: 1, onRepeat: this.AlphaButton.bind(this) });
-    }
-    public ScaleGameOver(){
-        TweenMax.fromTo(this.gameoversprite.scale, 1, { x: 0, y: 0 }, { x: 1, y: 1 });
-        this.addChild(this.gameoversprite);
-    }
-    public AlphaGameOverDown(){
-        TweenMax.fromTo(this.gameoversprite, 1, { alpha: 1 }, { alpha: 0 });
+        this.addChild(this.backgroundWindow);
     }
 
-    public ScaleScore(){
-        TweenMax.fromTo(this.scoreend.scale, 1, { x: 0, y: 0 }, { x: 1, y: 1 });
+    private animatioGameOver(): void {
+        let animationOver = new TimelineMax({ repeat: 2, repeatDelay: 0.5, onComplete: this.animatioGameOvertwo.bind(this), onRepeat: this.scaleGameOver.bind(this), });
+    }
+
+    private animatioGameOvertwo(): void {
+        let animationScore = new TimelineMax({ repeat: 2, repeatDelay: 2, onComplete: this.animationScore.bind(this), onRepeat: this.alphaGameOverDown.bind(this) });
+    }
+
+    private animationScore(): void {
+        let animationEnd = new TimelineMax({ repeat: 2, repeatDelay: 0.5, onComplete: this.animationButton.bind(this), onRepeat: this.scaleScore.bind(this) });
+    }
+
+    private animationButton(): void {
+        let animationButton = new TimelineMax({ repeat: 2, repeatDelay: 1, onRepeat: this.alphaButton.bind(this) });
+    }
+
+    private scaleGameOver(): void {
+        TweenMax.fromTo(this.gameoverSprite.scale, 1, { x: 0, y: 0 }, { x: 1, y: 1 });
+        this.addChild(this.gameoverSprite);
+    }
+
+    private alphaGameOverDown(): void {
+        TweenMax.fromTo(this.gameoverSprite, 1, { alpha: 1 }, { alpha: 0 });
+    }
+
+    private scaleScore(): void {
+        this.restartGame.alpha = 0;
+        this.backMenu.alpha = 0;
+
+        TweenMax.fromTo(this.scoreEnd.scale, 1, { x: 0, y: 0 }, { x: 1, y: 1 });
         TweenMax.fromTo(this.score.scale, 1, { x: 0, y: 0 }, { x: 1, y: 1 });
-        this.addChild(this.RestartGame);
-        this.addChild(this.BackMenu);
-        this.addChild(this.scoreend);
-        this.addChild(this.score);
 
-        this.RestartGame.alpha = 0;
-        this.BackMenu.alpha = 0;
-        this.removeChild(this.gameoversprite)
+        this.addChild(this.scoreEnd);
+        this.addChild(this.score);
+        this.removeChild(this.gameoverSprite);
     }
 
-    public AlphaButton(){
-        TweenMax.fromTo(this.RestartGame, 2, { alpha: 0 }, { alpha: 1 });
-        TweenMax.fromTo(this.BackMenu, 2, { alpha: 0 }, { alpha: 1 });
+    private alphaButton(): void {
+        this.addChild(this.backgroundMenu);
+        this.addChild(this.backgroundRestart);
+        this.addChild(this.restartGame);
+        this.addChild(this.backMenu);
 
+        TweenMax.fromTo(this.restartGame, 2, { alpha: 0 }, { alpha: 1 });
+        TweenMax.fromTo(this.backgroundRestart, 2, { alpha: 0 }, { alpha: 1 });
+        TweenMax.fromTo(this.backMenu, 2, { alpha: 0 }, { alpha: 1 });
+        TweenMax.fromTo(this.backgroundMenu, 2, { alpha: 0 }, { alpha: 1 });
+        
+        
     }
 }

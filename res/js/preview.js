@@ -11,43 +11,24 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-define(["require", "exports", "./Place.js"], function (require, exports, Place_js_1) {
+define(["require", "exports", "./Game", "./Button"], function (require, exports, Game_1, Button_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.preview = void 0;
-    var Sprite = PIXI.Sprite;
+    exports.Preview = void 0;
     var Container = PIXI.Container;
-    var preview = /** @class */ (function (_super) {
-        __extends(preview, _super);
-        function preview(place) {
+    var Preview = /** @class */ (function (_super) {
+        __extends(Preview, _super);
+        function Preview(game) {
             var _this = _super.call(this) || this;
-            _this.sprite = new Sprite();
-            _this.sprite.interactive = true;
-            _this.sprite.buttonMode = true;
-            _this.sprite.anchor.set(0.5, 0.5);
-            _this.sprite.texture = Place_js_1.Place.res.logo.texture;
-            _this.sprite.position.x = Place_js_1.Place.size / 2;
-            _this.sprite.position.y = Place_js_1.Place.size / 2;
-            _this.alpha = 0.9;
-            _this.scalelogo(_this.sprite);
-            _this.sprite.on("mouseover", function () {
-                this.alpha = 1;
-            }.bind(_this));
-            _this.sprite.on("mouseout", function () {
-                this.alpha = 0.9;
-            }.bind(_this));
-            _this.sprite.on("mouseup", function () {
-                this.emit("click");
-                place.showMenu();
-            }.bind(_this));
-            _this.addChild(_this.sprite);
+            _this.game = game;
+            _this.logo = new Button_1.Button("showMenu", [Game_1.Game.RES.logo.texture], [Game_1.Game.SIZE / 2, Game_1.Game.SIZE / 2]);
+            _this.logo.on("showMenu", _this.game.showMenu.bind(_this.game));
+            TweenMax.fromTo(_this.logo.scale, 1, { x: 0, y: 0 }, { x: 1, y: 1 });
+            _this.addChild(_this.logo);
             return _this;
         }
-        preview.prototype.scalelogo = function (use) {
-            TweenMax.fromTo(use.scale, 1, { x: 0, y: 0 }, { x: 1, y: 1 });
-        };
-        return preview;
+        return Preview;
     }(Container));
-    exports.preview = preview;
+    exports.Preview = Preview;
 });
 //# sourceMappingURL=Preview.js.map

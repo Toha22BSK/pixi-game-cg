@@ -11,81 +11,93 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-define(["require", "exports", "./Place.js", "./Button.js"], function (require, exports, Place_js_1, Button_js_1) {
+define(["require", "exports", "./Game", "./Button", "./MenuGame"], function (require, exports, Game_1, Button_1, MenuGame_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.gameover = void 0;
+    exports.GameOver = void 0;
     var Sprite = PIXI.Sprite;
     var Container = PIXI.Container;
     var Text = PIXI.Text;
     var TextStyle = PIXI.TextStyle;
-    var gameover = /** @class */ (function (_super) {
-        __extends(gameover, _super);
-        function gameover(endscore, place) {
+    var GameOver = /** @class */ (function (_super) {
+        __extends(GameOver, _super);
+        function GameOver(endscore, game) {
             var _this = _super.call(this) || this;
-            _this.MenuBack = Place_js_1.Place.res.BackgroundEndButtton.texture;
-            _this.MenuStock = Place_js_1.Place.res.menu.texture;
-            _this.MenuBring = Place_js_1.Place.res.menubring.texture;
-            _this.MenuPress = Place_js_1.Place.res.menupress.texture;
-            _this.backgroundwindow = new Sprite(Place_js_1.Place.res.black.texture);
-            _this.backgroundwindow.position.set(Place_js_1.Place.size / 2);
-            _this.backgroundwindow.anchor.set(0.5);
-            _this.backgroundwindow.alpha = 0.7;
-            _this.scoreend = new Sprite(Place_js_1.Place.res.score.texture);
-            _this.scoreend.position.set(Place_js_1.Place.size / 2, Place_js_1.Place.size * 0.4);
-            _this.scoreend.anchor.set(0.5);
-            _this.gameoversprite = new Sprite(Place_js_1.Place.res.GameOver.texture);
-            _this.gameoversprite.position.set(Place_js_1.Place.size / 2);
-            _this.gameoversprite.anchor.set(0.5);
-            _this.RestartGame = new Button_js_1.restartgame(place);
-            _this.BackMenu = new Button_js_1.backmenu(_this.MenuBack, _this.MenuStock, _this.MenuBring, _this.MenuPress, Place_js_1.Place.size * 0.75, Place_js_1.Place.size * 0.73, Place_js_1.Place.size * 0.77, 1, 1, place);
-            _this.score = new Text(String(endscore));
-            _this.score.anchor.set(0.5);
-            _this.score.position.set(Place_js_1.Place.size / 2, Place_js_1.Place.size * 0.45);
-            _this.score.style = new TextStyle({
-                fontSize: 120, fontFamily: "Calibri", fill: "#00fff0", align: "center", fontWeight: Place_js_1.Place.res.score.texture.width,
-                dropShadow: false
-            });
-            _this.addChild(_this.backgroundwindow);
-            _this.AnimatioGameOver();
+            _this.game = game;
+            _this.confugirationUI();
+            _this.animatioGameOver();
             return _this;
         }
-        gameover.prototype.AnimatioGameOver = function () {
-            var animationover = new TimelineMax({ repeat: 2, repeatDelay: 0.5, onComplete: this.AnimatioGameOvertwo.bind(this), onRepeat: this.ScaleGameOver.bind(this), });
+        GameOver.prototype.confugirationUI = function () {
+            this.backgroundWindow = new Sprite(Game_1.Game.RES.black.texture);
+            this.backgroundWindow.position.set(Game_1.Game.SIZE / 2);
+            this.backgroundWindow.anchor.set(0.5);
+            this.backgroundWindow.alpha = 0.7;
+            this.scoreEnd = new Sprite(Game_1.Game.RES.score.texture);
+            this.scoreEnd.position.set(Game_1.Game.SIZE / 2, Game_1.Game.SIZE * 0.4);
+            this.scoreEnd.anchor.set(0.5);
+            this.backgroundMenu = new Sprite(Game_1.Game.RES.backgroundEndButtton.texture);
+            this.backgroundMenu.position.set(Game_1.Game.SIZE * 0.75, Game_1.Game.SIZE * 0.737);
+            this.backgroundMenu.anchor.set(0.5);
+            this.backgroundRestart = new Sprite(Game_1.Game.RES.backgroundEndButtton.texture);
+            this.backgroundRestart.position.set(Game_1.Game.SIZE * 0.25, Game_1.Game.SIZE * 0.735);
+            this.backgroundRestart.anchor.set(0.5);
+            this.gameoverSprite = new Sprite(Game_1.Game.RES.GameOver.texture);
+            this.gameoverSprite.position.set(Game_1.Game.SIZE / 2);
+            this.gameoverSprite.anchor.set(0.5);
+            this.backMenu = new Button_1.Button("backToMenu", [Game_1.Game.RES.menu.texture, Game_1.Game.RES.menuBring.texture, Game_1.Game.RES.menuPress.texture], [Game_1.Game.SIZE * 0.75, Game_1.Game.SIZE * 0.78], 1);
+            this.backMenu.on("backToMenu", this.game.backToMenu.bind(this.game, 1));
+            this.restartGame = new Button_1.Button("restartGame", [Game_1.Game.RES.restart.texture, Game_1.Game.RES.restartBring.texture, Game_1.Game.RES.restartPress.texture], [Game_1.Game.SIZE * 0.25, Game_1.Game.SIZE * 0.78], 1);
+            this.restartGame.on("restartGame", this.game.restartgamefield.bind(this.game, MenuGame_1.MenuGame.sizeSetting, MenuGame_1.MenuGame.timeSetting));
+            this.score = new Text(String(MenuGame_1.MenuGame.scoreGame));
+            this.score.anchor.set(0.5);
+            this.score.position.set(Game_1.Game.SIZE / 2, Game_1.Game.SIZE * 0.45);
+            this.score.style = new TextStyle({
+                fontSize: 120, fontFamily: "Calibri", fill: "#00fff0", align: "center", fontWeight: Game_1.Game.RES.score.texture.width,
+                dropShadow: false
+            });
+            this.addChild(this.backgroundWindow);
         };
-        gameover.prototype.AnimatioGameOvertwo = function () {
-            var animationscore = new TimelineMax({ repeat: 2, repeatDelay: 2, onComplete: this.AnimationScore.bind(this), onRepeat: this.AlphaGameOverDown.bind(this) });
+        GameOver.prototype.animatioGameOver = function () {
+            var animationOver = new TimelineMax({ repeat: 2, repeatDelay: 0.5, onComplete: this.animatioGameOvertwo.bind(this), onRepeat: this.scaleGameOver.bind(this), });
         };
-        gameover.prototype.AnimationScore = function () {
-            var animationEnd = new TimelineMax({ repeat: 2, repeatDelay: 0.5, onComplete: this.AnimationButton.bind(this), onRepeat: this.ScaleScore.bind(this) });
+        GameOver.prototype.animatioGameOvertwo = function () {
+            var animationScore = new TimelineMax({ repeat: 2, repeatDelay: 2, onComplete: this.animationScore.bind(this), onRepeat: this.alphaGameOverDown.bind(this) });
         };
-        gameover.prototype.AnimationButton = function () {
-            var animationbutton = new TimelineMax({ repeat: 2, repeatDelay: 1, onRepeat: this.AlphaButton.bind(this) });
+        GameOver.prototype.animationScore = function () {
+            var animationEnd = new TimelineMax({ repeat: 2, repeatDelay: 0.5, onComplete: this.animationButton.bind(this), onRepeat: this.scaleScore.bind(this) });
         };
-        gameover.prototype.ScaleGameOver = function () {
-            TweenMax.fromTo(this.gameoversprite.scale, 1, { x: 0, y: 0 }, { x: 1, y: 1 });
-            this.addChild(this.gameoversprite);
+        GameOver.prototype.animationButton = function () {
+            var animationButton = new TimelineMax({ repeat: 2, repeatDelay: 1, onRepeat: this.alphaButton.bind(this) });
         };
-        gameover.prototype.AlphaGameOverDown = function () {
-            TweenMax.fromTo(this.gameoversprite, 1, { alpha: 1 }, { alpha: 0 });
+        GameOver.prototype.scaleGameOver = function () {
+            TweenMax.fromTo(this.gameoverSprite.scale, 1, { x: 0, y: 0 }, { x: 1, y: 1 });
+            this.addChild(this.gameoverSprite);
         };
-        gameover.prototype.ScaleScore = function () {
-            TweenMax.fromTo(this.scoreend.scale, 1, { x: 0, y: 0 }, { x: 1, y: 1 });
+        GameOver.prototype.alphaGameOverDown = function () {
+            TweenMax.fromTo(this.gameoverSprite, 1, { alpha: 1 }, { alpha: 0 });
+        };
+        GameOver.prototype.scaleScore = function () {
+            this.restartGame.alpha = 0;
+            this.backMenu.alpha = 0;
+            TweenMax.fromTo(this.scoreEnd.scale, 1, { x: 0, y: 0 }, { x: 1, y: 1 });
             TweenMax.fromTo(this.score.scale, 1, { x: 0, y: 0 }, { x: 1, y: 1 });
-            this.addChild(this.RestartGame);
-            this.addChild(this.BackMenu);
-            this.addChild(this.scoreend);
+            this.addChild(this.scoreEnd);
             this.addChild(this.score);
-            this.RestartGame.alpha = 0;
-            this.BackMenu.alpha = 0;
-            this.removeChild(this.gameoversprite);
+            this.removeChild(this.gameoverSprite);
         };
-        gameover.prototype.AlphaButton = function () {
-            TweenMax.fromTo(this.RestartGame, 2, { alpha: 0 }, { alpha: 1 });
-            TweenMax.fromTo(this.BackMenu, 2, { alpha: 0 }, { alpha: 1 });
+        GameOver.prototype.alphaButton = function () {
+            this.addChild(this.backgroundMenu);
+            this.addChild(this.backgroundRestart);
+            this.addChild(this.restartGame);
+            this.addChild(this.backMenu);
+            TweenMax.fromTo(this.restartGame, 2, { alpha: 0 }, { alpha: 1 });
+            TweenMax.fromTo(this.backgroundRestart, 2, { alpha: 0 }, { alpha: 1 });
+            TweenMax.fromTo(this.backMenu, 2, { alpha: 0 }, { alpha: 1 });
+            TweenMax.fromTo(this.backgroundMenu, 2, { alpha: 0 }, { alpha: 1 });
         };
-        return gameover;
+        return GameOver;
     }(Container));
-    exports.gameover = gameover;
+    exports.GameOver = GameOver;
 });
 //# sourceMappingURL=GameOver.js.map
