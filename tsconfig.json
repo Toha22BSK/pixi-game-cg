@@ -13,9 +13,6 @@
     "files": [
         "./res/src/Main.ts",
         "res/libs/pixi.js.d.ts",
-        "res/libs/createjs/createjs-lib.d.ts",
-        "res/libs/createjs/preloadjs.d.ts",
-        "res/libs/createjs/soundjs.d.ts",
         "res/libs/pixi-sound.d.ts",
         "res/libs/gsap/index.d.ts"
     ]
