@@ -313,6 +313,7 @@ define(["require", "exports", "./Game", "./Button", "./MenuGame"], function (req
                 for (var j = 0; j < this.sizeField; j++) {
                     this.balls[i][j].interactive = value;
                     this.balls[i][j].buttonMode = value;
+                    this.balls[i][j].scale.set(this.scaleBall);
                 }
             }
         };

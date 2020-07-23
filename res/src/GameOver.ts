@@ -24,7 +24,6 @@ export class GameOver extends Container {
         this.game = game;
         this.confugirationUI();
         this.animatioGameOver();
-
     }
 
     private confugirationUI(): void{
@@ -115,7 +114,5 @@ export class GameOver extends Container {
         TweenMax.fromTo(this.backgroundRestart, 2, { alpha: 0 }, { alpha: 1 });
         TweenMax.fromTo(this.backMenu, 2, { alpha: 0 }, { alpha: 1 });
         TweenMax.fromTo(this.backgroundMenu, 2, { alpha: 0 }, { alpha: 1 });
-        
-        
     }
 }

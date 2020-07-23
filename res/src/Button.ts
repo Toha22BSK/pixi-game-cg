@@ -1,11 +1,9 @@
-import Application = PIXI.Application;
 import Sprite = PIXI.Sprite;
 import Container = PIXI.Container;
 import Texture = PIXI.Texture;
 import Text = PIXI.Text;
 import TextStyle = PIXI.TextStyle;
 import { Game } from "./Game";
-import { GameField } from "./GameField";
 import { MenuGame } from "./MenuGame";
 declare let TweenMax: any;
 declare let TimelineMax: any;

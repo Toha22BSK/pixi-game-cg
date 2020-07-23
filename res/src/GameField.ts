@@ -146,7 +146,7 @@ export class GameField extends Container {
         this.addChild(this.backMenu);
     }
 
-    private backFromMenu() {
+    private backFromMenu(): void {
         this.game.backToMenu(0);
         this.timerStart.kill();
     }
@@ -255,7 +255,7 @@ export class GameField extends Container {
         }
     }
 
-    private timerAnimation() {
+    private timerAnimation(): void {
         this.timerText();
         this.timerStart = new TimelineMax({ repeat: this.timerGame, repeatDelay: 1, onComplete: this.timerEnd.bind(this), onRepeat: this.tickTimer.bind(this) });
     }
@@ -381,6 +381,7 @@ export class GameField extends Container {
             for (let j = 0; j < this.sizeField; j++) {
                 this.balls[i][j].interactive = value;
                 this.balls[i][j].buttonMode = value;
+                this.balls[i][j].scale.set(this.scaleBall);
             }
         }
     }
@@ -443,7 +444,7 @@ export class GameField extends Container {
             TweenMax.fromTo(this.selectBall, 1, { alpha: 1 }, { alpha: 0 });
     }
 
-    public checkSwap(use: any) {
+    private checkSwap(use: any): void {
         let n = 1;
         let temp: any;
         let koordinat: number[] = new Array();
